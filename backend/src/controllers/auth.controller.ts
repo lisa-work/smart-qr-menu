@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+import { registerUser } from "../services/auth.service";
 
-export const register = (req: Request, res: Response) => {
-    res.status(200).json(
-        {message: "User registered successfully!"}
-    )
+export const register = async (req: Request, res: Response) => {
+    const result = await registerUser();
+
+    res.status(200).json(result)
 }

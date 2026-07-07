@@ -1,5 +1,6 @@
 import { prisma } from "../config/prisma";
 import bcrypt from "bcrypt";
+import {AppErrors} from "../errors/AppErrors";
 
 // Declare the type for the user registration data
 type RegisterData = {
@@ -21,7 +22,7 @@ export const registerUser = async (userData: RegisterData) => {
 
     // If user exists, throw an error
     if (existingUser) {
-        throw new Error("User already exists")
+        throw new AppErrors("User already exists", 409);
     }
 
     // After validating the user data, hash the password

@@ -14,11 +14,11 @@ export const register = async (req: Request, res: Response) => {
     }
 
     // Call the registerUser service with the validated data
-    const result = await registerUser(validatedData.data);
+    const user = await registerUser(validatedData.data);
 
     // Return a 201 response indicating successful registration
     res.status(201).json({
         message: "User registered successfully",
-        data: result
+        data: user
     })
 }

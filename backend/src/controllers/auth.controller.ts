@@ -3,12 +3,22 @@ import { registerSchema } from "../validators/auth.validation";
 import { registerUser } from "../services/auth.service";
 
 export const register = async (req: Request, res: Response) => {
+    // Validate the request body using the registerSchema (zod)
     const validatedData = registerSchema.safeParse(req.body);
 
-    // const result = await registerUser();
+    // If validation fails, return a 400 response with the validation errors
+    if (!validatedData.success) {
+        return res.status(400).json({
+            errors: validatedData.error.issues
+        });
+    }
 
-    res.status(200).json({
-        message: "Validation passed",
-        data: validatedData
+    // Call the registerUser service with the validated data
+    const result = await registerUser(validatedData.data);
+
+    // Return a 201 response indicating successful registration
+    res.status(201).json({
+        message: "User registered successfully",
+        data: result
     })
 }

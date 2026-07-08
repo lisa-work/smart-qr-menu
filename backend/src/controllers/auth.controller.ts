@@ -45,6 +45,7 @@ export const login = asyncHandler(
         // Generate a JWT token for the logged-in user
         const token = generateToken(user.id);
 
+        // Set the token in an HTTP-only cookie for security
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",

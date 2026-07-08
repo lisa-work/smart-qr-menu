@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { registerSchema } from "../validators/auth.validation";
-import { registerUser } from "../services/auth.service";
+import { registerSchema, loginSchema } from "../validators/auth.validation";
+import { registerUser, loginUser } from "../services/auth.service";
+import { asyncHandler } from "../middlewares/asyncHandler";
 
-export const register = async (req: Request, res: Response) => {
+export const register = asyncHandler(
+    async (req: Request, res: Response) => {
     // Validate the request body using the registerSchema (zod)
     const validatedData = registerSchema.safeParse(req.body);
 
@@ -22,3 +24,27 @@ export const register = async (req: Request, res: Response) => {
         data: user
     })
 }
+)
+
+export const login = asyncHandler(
+    async (req: Request, res: Response) => {
+        // Validate the request body using the loginSchema (zod)
+        const validatedLogin = loginSchema.safeParse(req.body);
+
+        // If validation fails, return a 400 response with the validation errors
+        if (!validatedLogin.success) {
+            return res.status(400).json({
+                errors: validatedLogin.error.issues
+            })
+        }
+
+        // Call the loginUser service with the validated data
+        const user = await loginUser(validatedLogin.data);
+
+        // Return a 200 response indicating successful login
+        res.status(200).json({
+            message: "User logged in successfully",
+            data: user
+        })
+    }
+)

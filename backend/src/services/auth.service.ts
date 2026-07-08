@@ -9,6 +9,13 @@ type RegisterData = {
     password: string;
 }
 
+// Declare the type for the user login data
+type LoginData = {
+    email: string;
+    password: string;
+}
+
+// Service function to handle user registration
 export const registerUser = async (userData: RegisterData) => {
     // Destructure the user data
     const { name, email, password } = userData;
@@ -41,5 +48,37 @@ export const registerUser = async (userData: RegisterData) => {
     const { password: _, ...safeUser} = user;
 
     // Return the safe user data
+    return safeUser;
+}
+
+// Service function to handle user login
+export const loginUser = async (loginData: LoginData) => {
+    // Destructure the login data
+    const { email, password } = loginData;
+
+    // Find user by email
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    })
+
+    // User not exist, throw error
+    if (!user) {
+        throw new AppErrors("Invalid email or password", 404);
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    // If password does not match, throw error
+    if (!isPasswordValid) {
+        throw new AppErrors("Invalid email or password", 401);
+    }
+
+    // Destructure the user object to exclude the password before returning it
+    const { password: _, ...safeUser } = user;
+
+    // Return the user data (excluding password) if login is successful
     return safeUser;
 }

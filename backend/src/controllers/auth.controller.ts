@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { registerSchema, loginSchema } from "../validators/auth.validation";
 import { registerUser, loginUser } from "../services/auth.service";
 import { asyncHandler } from "../middlewares/asyncHandler";
+import { generateToken } from "../utils/generateToken";
 
 export const register = asyncHandler(
     async (req: Request, res: Response) => {
@@ -41,10 +42,20 @@ export const login = asyncHandler(
         // Call the loginUser service with the validated data
         const user = await loginUser(validatedLogin.data);
 
+        // Generate a JWT token for the logged-in user
+        const token = generateToken(user.id);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+
         // Return a 200 response indicating successful login
         res.status(200).json({
             message: "User logged in successfully",
-            data: user
+            success: true,
         })
     }
 )

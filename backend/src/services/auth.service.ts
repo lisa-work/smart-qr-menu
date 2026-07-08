@@ -1,6 +1,7 @@
 import { prisma } from "../config/prisma";
 import bcrypt from "bcrypt";
 import {AppErrors} from "../errors/AppErrors";
+import type { Request, Response } from "express";
 
 // Declare the type for the user registration data
 type RegisterData = {
@@ -82,3 +83,10 @@ export const loginUser = async (loginData: LoginData) => {
     // Return the user data (excluding password) if login is successful
     return safeUser;
 }
+
+export const getCurrentUser = (req: Request, res: Response) => {
+    return res.json({
+        success: true,
+        user: req.user,
+    });
+};

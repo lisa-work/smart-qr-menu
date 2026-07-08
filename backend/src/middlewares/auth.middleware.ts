@@ -35,9 +35,9 @@ export const protect = async (
         }
     });
 
-    // If no user is found, return an error indicating invalid email or password
+    // If the user is not found, return an unauthorized error
     if (!user) {
-        return next(new AppErrors("Invalid email or password", 404));
+        return next(new AppErrors("Unauthorized", 401));
     }
 
     // Attach the user object to the request for use in subsequent middleware or route handlers

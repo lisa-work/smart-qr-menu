@@ -60,3 +60,25 @@ export const login = asyncHandler(
         })
     }
 )
+
+// Controller to get the current logged-in user
+export const getCurrentUser = (req: Request, res: Response) => {
+    return res.json({
+        success: true,
+        user: req.user,
+    });
+};
+
+// Controller to log out the user by clearing the token cookie
+export const logoutUser = (req: Request, res: Response) => {
+    res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: "User logged out successfully",
+    });
+}

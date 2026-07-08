@@ -1,7 +1,6 @@
 import { prisma } from "../config/prisma";
 import bcrypt from "bcrypt";
 import {AppErrors} from "../errors/AppErrors";
-import type { Request, Response } from "express";
 
 // Declare the type for the user registration data
 type RegisterData = {
@@ -84,24 +83,3 @@ export const loginUser = async (loginData: LoginData) => {
     return safeUser;
 }
 
-// Service function to get the current logged-in user
-export const getCurrentUser = (req: Request, res: Response) => {
-    return res.json({
-        success: true,
-        user: req.user,
-    });
-};
-
-// Service function to handle user logout
-export const logoutUser = (req: Request, res: Response) => {
-    res.clearCookie("token", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-    });
-
-    return res.status(200).json({
-        success: true,
-        message: "User logged out successfully",
-    });
-}

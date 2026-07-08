@@ -46,3 +46,22 @@ export const protect = async (
     // Call the next middleware or route handler
     next();
 };
+
+// Middleware to authorize users based on their roles
+export const authorize = (...roles: string[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+
+        // If the user is not attached to the request, return an unauthorized error
+        if (!req.user) {
+            return next(new AppErrors("Unauthorized", 401));
+        }
+
+        // If the user's role is not included in the allowed roles, return a forbidden error
+        if (!roles.includes(req.user.role)) {
+            return next(new AppErrors("Forbidden", 403));
+        }
+
+        // If the user is authorized, call the next middleware or route handler
+        next();
+    }
+}

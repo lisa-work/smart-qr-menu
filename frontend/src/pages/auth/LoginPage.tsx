@@ -1,4 +1,3 @@
-import React from 'react'
 import { AuthLayout, LoginForm } from "../../components";
 import { Link } from "react-router-dom";
 

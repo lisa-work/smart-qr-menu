@@ -7,7 +7,7 @@ interface AuthLayoutProps {
   title: string
   subtitle?: string
   children: React.ReactNode
-  footer?: string
+  footer?: React.ReactNode
 }
 
 function AuthLayout({ title, subtitle, children, footer }: AuthLayoutProps) {
@@ -28,7 +28,11 @@ function AuthLayout({ title, subtitle, children, footer }: AuthLayoutProps) {
             </Card>
 
             {/* Footer */}
-            {footer && <p className="text-xs text-muted-foreground">{footer}</p>}
+            {footer && (
+            <div className="text-xs text-muted-foreground">
+                {footer}
+            </div>
+            )}
         </main>
     </div>
   )

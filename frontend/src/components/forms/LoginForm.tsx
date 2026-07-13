@@ -3,13 +3,15 @@ import { loginSchema } from '@/schema/auth'
 import { Button, Input, Label } from '../ui'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import authService from '@/services/auth'
+import { useAuth }  from '@/hooks/useAuth'
 
 // Define the TypeScript type for the login form data based on the loginSchema
 type LoginData = z.infer<typeof loginSchema>
 
 // Define the LoginForm component
 function LoginForm() {
+    const { login } = useAuth();
+
     // Initialize the useForm hook with the loginSchema for validation
   const form = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
@@ -21,7 +23,7 @@ function LoginForm() {
 
   // Define the onSubmit function to handle form submission
   const onSubmit = async (data: LoginData) => {
-    await authService.login(data)
+    await login(data)
   }
 
   return (

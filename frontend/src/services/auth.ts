@@ -1,18 +1,5 @@
 import api from "./axios";
-
-// Declare the type for the user registration data
-type RegisterData = {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
-
-// Declare the type for the user login data
-type LoginData = {
-    email: string;
-    password: string;
-}
+import type { RegisterData, LoginData } from "../types/auth";
 
 const authService = {
     // Function to register a new user

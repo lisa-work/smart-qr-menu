@@ -5,6 +5,7 @@ type RegisterData = {
     name: string;
     email: string;
     password: string;
+    confirmPassword: string;
 }
 
 // Declare the type for the user login data

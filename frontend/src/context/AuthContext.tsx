@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import type { User, LoginData } from '../types/auth';
 import authService from '../services/auth';
 
@@ -22,7 +22,24 @@ export const AuthContext = createContext<AuthContextProps | undefined>(undefined
 export function AuthProvider({ children } : AuthProviderProps) {
     // Initialize the user and loading state
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    // Use useEffect to fetch the current user when the component mounts
+    useEffect(() => {
+    const fetchCurrentUser = async () => {
+        try {
+        const response = await authService.getCurrentUser();
+
+        setUser(response.user);
+        } catch {
+        setUser(null);
+        } finally {
+        setLoading(false);
+        }
+    };
+
+    fetchCurrentUser();
+    }, []);
 
     // Define the login function that calls the authService to log in the user
     const login = async (data: LoginData) => {

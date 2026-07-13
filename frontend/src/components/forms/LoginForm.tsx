@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth }  from '@/hooks/useAuth'
 import { toast } from 'react-hot-toast'
+import { useState } from 'react'
 
 // Define the TypeScript type for the login form data based on the loginSchema
 type LoginData = z.infer<typeof loginSchema>
@@ -12,6 +13,7 @@ type LoginData = z.infer<typeof loginSchema>
 // Define the LoginForm component
 function LoginForm() {
     const { login } = useAuth();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Initialize the useForm hook with the loginSchema for validation
   const form = useForm<LoginData>({
@@ -24,11 +26,14 @@ function LoginForm() {
 
   // Define the onSubmit function to handle form submission
   const onSubmit = async (data: LoginData) => {
+    setIsSubmitting(true);
     try {    
         await login(data)
         toast.success("Welcome back!");
     } catch (error) {
         toast.error("Login failed. Please check your credentials.");
+    } finally {
+        setIsSubmitting(false);
     }
   }
 
@@ -51,7 +56,9 @@ function LoginForm() {
         </p>
 
         {/* Render the submit button */}
-        <Button type="submit">Login</Button>
+        <Button type="submit"> 
+            { isSubmitting ? "Logging in..." : "Login" } 
+        </Button>
     </form>
   )
 }

@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import type { User, LoginData } from '../types/auth';
 import authService from '../services/auth';
+import { toast } from 'react-hot-toast';
 
 // Define the shape of the authentication context
 interface AuthContextProps {
@@ -58,6 +59,9 @@ export function AuthProvider({ children } : AuthProviderProps) {
             setLoading(true);
             await authService.logout();
             setUser(null);
+            toast.success("Logged out successfully.");
+        } catch (error) {
+            toast.error("Logout failed. Please try again.");
         } finally {
             setLoading(false);
         }

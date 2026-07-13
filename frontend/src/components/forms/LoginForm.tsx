@@ -4,6 +4,7 @@ import { Button, Input, Label } from '../ui'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth }  from '@/hooks/useAuth'
+import { toast } from 'react-hot-toast'
 
 // Define the TypeScript type for the login form data based on the loginSchema
 type LoginData = z.infer<typeof loginSchema>
@@ -23,7 +24,12 @@ function LoginForm() {
 
   // Define the onSubmit function to handle form submission
   const onSubmit = async (data: LoginData) => {
-    await login(data)
+    try {    
+        await login(data)
+        toast.success("Welcome back!");
+    } catch (error) {
+        toast.error("Login failed. Please check your credentials.");
+    }
   }
 
   return (

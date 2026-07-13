@@ -4,6 +4,7 @@ import { registerSchema } from '@/schema/auth'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import authService from '@/services/auth'
+import { toast } from 'react-hot-toast'
 
 // Define the TypeScript type for the register form data based on the registerSchema
 type RegisterData = z.infer<typeof registerSchema>
@@ -20,7 +21,12 @@ function RegisterForm() {
 
     // Define the onSubmit function to handle form submission
     const onSubmit = async (data: RegisterData) => {
-        await authService.register(data)
+        try {
+            await authService.register(data)
+            toast.success("Account created successfully!");
+        } catch (error) {
+            toast.error("Registration failed. Please try again.");
+        }
     }
 
   return (

@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from 'zod'
 import { loginSchema } from '@/schema/auth'
 import { Button, Input, Label } from '../ui'
 import { useForm } from 'react-hook-form'

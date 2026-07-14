@@ -1,5 +1,6 @@
 import { prisma } from "../config/prisma";
 import { AppErrors } from "../errors/AppErrors";
+import { getRestaurantOrThrow } from "../utils/restaurant.helper";
 
 // Declare the type for the restaurant creation data
 type CreateRestaurantData = {
@@ -59,18 +60,8 @@ export const getRestaurantByOwnerId = async (ownerId: number) => {
 
 // Service function to update a restaurant's information for a specific owner
 export const updateRestaurant = async (ownerId: number, restaurantData: Partial<CreateRestaurantData>) => {
-    const owner = await prisma.user.findUnique({
-        where: {
-            id: ownerId
-        },
-        include: {
-            restaurant: true
-        }
-    })
 
-    if (!owner || !owner.restaurant) {
-        throw new AppErrors("Restaurant not found", 404);
-    }
+    await getRestaurantOrThrow(ownerId); // Ensure the restaurant exists before updating
 
     const restaurant = await prisma.restaurant.update({
         where: {

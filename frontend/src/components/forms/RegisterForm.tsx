@@ -49,7 +49,7 @@ function RegisterForm() {
 
         {/* // Render the email input field */}
         <Label htmlFor="email">Email</Label>
-        <Input type="email" placeholder="Email" id="email" {...form.register('email')} />
+        <Input type="email" placeholder="Email" id="email" autoComplete="email" {...form.register('email')} />
         {/* Render the email validation error message */}
         <p className="text-sm text-red-500">
             {errors.email?.message}

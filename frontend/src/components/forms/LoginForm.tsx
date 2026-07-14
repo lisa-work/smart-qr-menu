@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth }  from '@/hooks/useAuth'
 import { toast } from 'react-hot-toast'
 import { useState } from 'react'
+import { MdOutlineVisibility } from "react-icons/md";
+import { MdOutlineVisibilityOff } from "react-icons/md";
 
 // Define the TypeScript type for the login form data based on the loginSchema
 type LoginData = z.infer<typeof loginSchema>
@@ -14,6 +16,7 @@ type LoginData = z.infer<typeof loginSchema>
 function LoginForm() {
     const { login } = useAuth();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     // Initialize the useForm hook with the loginSchema for validation
   const form = useForm<LoginData>({
@@ -49,7 +52,21 @@ function LoginForm() {
 
         {/* Render the password input field with validation */}
         <Label htmlFor="password">Password</Label>
-        <Input type="password" placeholder="Password" id="password" {...form.register('password')} />
+        <div className="relative">
+            <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                id="password"
+                {...form.register('password')}
+            />
+            <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+            >
+                {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
+            </button>
+        </div>
         {/* Render the password validation error message */}
         <p className="text-sm text-red-500">
             {errors.password?.message}

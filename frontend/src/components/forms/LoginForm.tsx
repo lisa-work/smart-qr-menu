@@ -41,7 +41,7 @@ function LoginForm() {
     <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* Render the email input field with validation */}
         <Label htmlFor="email">Email</Label>
-        <Input type="email" placeholder="Email" id="email" {...form.register('email')} />
+        <Input autoFocus type="email" placeholder="Email" id="email" {...form.register('email')} />
         {/* Render the email validation error message */}
         <p className="text-sm text-red-500">
             {errors.email?.message}

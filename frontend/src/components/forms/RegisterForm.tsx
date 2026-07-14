@@ -22,6 +22,8 @@ function RegisterForm() {
         mode: "onChange"
     })
 
+    const { formState: { isSubmitting } } = form
+
     // Destructure the errors object from the form state for displaying validation errors
     const { formState: { errors } } = form
 
@@ -88,7 +90,9 @@ function RegisterForm() {
         </p>
 
         {/* Render the submit button */}
-        <Button type="submit">Register</Button>
+        <Button type="submit" disabled={isSubmitting} className="mt-4 w-full disabled:opacity-50 disabled:cursor-not-allowed">
+            {isSubmitting ? "Registering..." : "Register"}
+        </Button>
     </form>
   )
 }

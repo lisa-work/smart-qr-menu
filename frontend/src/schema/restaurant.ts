@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-export const restaurantValidation = z.object({
+// Define the validation schema for restaurant information using zod
+export const restaurantSchema = z.object({
     name: z.string().trim().min(1, "Restaurant name is required").max(100, "Restaurant name must be less than 100 characters"),
     email: z.email("Invalid email address").optional(),
     address: z.string().trim().max(255, "Address must be less than 255 characters").optional(),
@@ -11,4 +12,7 @@ export const restaurantValidation = z.object({
     website: z.url().optional(),
 })
 
-export const updateRestaurantValidation = restaurantValidation.partial()
+// Define the validation schema for updating restaurant information using zod
+export const updateRestaurantSchema = restaurantSchema.partial().refine((data) => Object.keys(data).length > 0, {
+    message: "At least one field must be provided for update",
+});

@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
-app.use("/api/restaurants", restoRoutes);
+app.use("/api/restaurant", restoRoutes);
 
 // Other routes
 app.use(errorHandler);

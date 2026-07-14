@@ -5,7 +5,7 @@ const router = Router();
 
 // Resto routes
 router.post("/create", createRestaurant);
-router.get("/get/:id", getRestaurant);
-router.put("/update/:id", updateRestaurantInfo);
+router.get("/get", getRestaurant);
+router.put("/update", updateRestaurantInfo);
 
 export default router;

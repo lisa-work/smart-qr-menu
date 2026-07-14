@@ -50,6 +50,7 @@ export {
   TableCell,
   TableCaption,
 } from "./table"
+export { Textarea } from "./textarea"
 
 
 

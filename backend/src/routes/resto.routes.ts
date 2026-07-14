@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { createRestaurant, getRestaurant, updateRestaurantInfo } from "../controllers/resto.controller";
 
-const route = Router();
+const router = Router();
 
 // Resto routes
-route.post("/", createRestaurant);
-route.get("/:id", getRestaurant);
-route.put("/:id", updateRestaurantInfo);
+router.post("/create", createRestaurant);
+router.get("/get/:id", getRestaurant);
+router.put("/update/:id", updateRestaurantInfo);
+
+export default router;

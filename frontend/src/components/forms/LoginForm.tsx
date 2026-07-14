@@ -73,7 +73,7 @@ function LoginForm() {
         </p>
 
         {/* Render the submit button */}
-        <Button type="submit"> 
+        <Button type="submit" disabled={isSubmitting} className="mt-4 w-full disabled:opacity-50 disabled:cursor-not-allowed"> 
             { isSubmitting ? "Logging in..." : "Login" } 
         </Button>
     </form>

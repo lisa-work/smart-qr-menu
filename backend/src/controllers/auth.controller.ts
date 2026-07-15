@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { registerSchema, loginSchema } from "../validators/auth.validation";
 import { registerUser, loginUser } from "../services/auth.service";
 import { asyncHandler } from "../middlewares/asyncHandler";
-import { generateToken } from "../utils/generateToken";
+import { generateToken } from "../utils";
 
 export const register = asyncHandler(
     async (req: Request, res: Response) => {

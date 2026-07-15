@@ -10,7 +10,7 @@ export const protect = async (
     next: NextFunction
 ) => {
     // Get the token from cookies
-    const token = req.cookies.token;
+    const token = req.cookies?.token;
 
     // If no token is found, return an unauthorized error
     if (!token) {

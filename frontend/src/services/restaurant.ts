@@ -3,17 +3,17 @@ import type { RestaurantData } from "../types/restaurant";
 
 const restaurantService = {
     createRestaurant: async (restaurantData: RestaurantData) => {
-        const response = await api.post("/api/restaurant/create", restaurantData);
+        const response = await api.post("/restaurant/create", restaurantData);
         return response.data;
     },
 
     getRestaurant: async () => {
-        const response = await api.get(`/api/restaurant/get`);
+        const response = await api.get(`/restaurant/get`);
         return response.data;
     },
 
     updateRestaurant: async (restaurantData: Partial<RestaurantData>) => {
-        const response = await api.put(`/api/restaurant/update`, restaurantData);
+        const response = await api.put(`/restaurant/update`, restaurantData);
         return response.data;
     }
 }

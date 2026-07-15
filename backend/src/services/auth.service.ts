@@ -1,20 +1,14 @@
 import { prisma } from "../config/prisma";
 import bcrypt from "bcrypt";
 import {AppErrors} from "../errors/AppErrors";
+import {registerSchema, loginSchema} from "../validators/auth.validation";
+import { z } from "zod";
 
 // Declare the type for the user registration data
-type RegisterData = {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
+type RegisterData = z.infer<typeof registerSchema>;
 
 // Declare the type for the user login data
-type LoginData = {
-    email: string;
-    password: string;
-}
+type LoginData = z.infer<typeof loginSchema>;
 
 // Service function to handle user registration
 export const registerUser = async (userData: RegisterData) => {

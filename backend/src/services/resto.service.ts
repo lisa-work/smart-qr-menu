@@ -1,18 +1,12 @@
 import { prisma } from "../config/prisma";
 import { AppErrors } from "../errors/AppErrors";
-import { getRestaurantOrThrow } from "../utils/restaurant.helper";
+import { getRestaurantOrThrow } from "../utils"
+import { restaurantValidation, updateRestaurantValidation } from "../validators/resto.validation";
+import { z } from "zod";
 
 // Declare the type for the restaurant creation data
-type CreateRestaurantData = {
-    name: string;
-    address?: string;
-    openingHours?: string;
-    email?: string;
-    logo?: string;
-    description?: string;
-    phone?: string;
-    website?: string;
-}
+type CreateRestaurantData = z.infer<typeof restaurantValidation>;
+type UpdateRestaurantData = z.infer<typeof updateRestaurantValidation>;
 
 // Service function to create a new restaurant for a specific owner
 export const createNewRestaurant = async (ownerId: number, restaurantData: CreateRestaurantData) => {
@@ -59,7 +53,7 @@ export const getRestaurantByOwnerId = async (ownerId: number) => {
 }
 
 // Service function to update a restaurant's information for a specific owner
-export const updateRestaurant = async (ownerId: number, restaurantData: Partial<CreateRestaurantData>) => {
+export const updateRestaurant = async (ownerId: number, restaurantData: UpdateRestaurantData) => {
 
     await getRestaurantOrThrow(ownerId); // Ensure the restaurant exists before updating
 

@@ -1,22 +1,18 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { updateRestaurantSchema } from '@/schema/restaurant';
 import { Button, Input, Textarea, Label } from '../ui';
-import { RestaurantSettings, type RestaurantData } from '@/types/restaurant';
-
+import { RestaurantSettings, type RestaurantData, type UpdatedRestaurantData } from '@/types/restaurant';
 
 type RestaurantFormProps = {
     restaurant: RestaurantData | null;
-    onSubmit: (data: z.infer<typeof updateRestaurantSchema>) => Promise<void>;
+    onSubmit: (data: UpdatedRestaurantData) => Promise<void>;
     loading: boolean;
 }
 
-type UpdateRestaurantData = z.infer<typeof updateRestaurantSchema>;
-
 function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
-    const {register, handleSubmit, formState: { errors, isSubmitting, isDirty }, reset} = useForm<UpdateRestaurantData>({
+    const {register, handleSubmit, formState: { errors, isSubmitting, isDirty }, reset} = useForm<UpdatedRestaurantData>({
         resolver: zodResolver(updateRestaurantSchema),
         defaultValues: {
             name: "",

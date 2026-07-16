@@ -1,9 +1,8 @@
 import './App.css'
 import { Routes, Route, Navigate } from "react-router-dom";
-import { LoginPage, RegisterPage } from './pages';
+import { LoginPage, RegisterPage, RestaurantSettingsPage } from './pages';
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from './pages/auth/ProtectedRoute';
-import RestaurantSettingsPage from './pages/owner/RestaurantSettings';
 
 function App() {
 

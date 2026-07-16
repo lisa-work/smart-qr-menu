@@ -16,3 +16,13 @@ export const loginSchema = z.object({
     email: z.email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters long"),
 })
+
+export const userSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+    role: z.enum(["USER", "Owner"]),
+    createdAt: z.date(),
+    updatedAt: z.date(),
+})

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { restaurantSchema } from "@/schema/restaurant";
 
 export type RestaurantData = z.infer<typeof restaurantSchema>;
+export type UpdatedRestaurantData = Partial<RestaurantData>;
 
 export type RestaurantSettingsType = {
     label: string;

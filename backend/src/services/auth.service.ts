@@ -5,10 +5,10 @@ import {registerSchema, loginSchema} from "../validators/auth.validation";
 import { z } from "zod";
 
 // Declare the type for the user registration data
-type RegisterData = z.infer<typeof registerSchema>;
+export type RegisterData = z.infer<typeof registerSchema>;
 
 // Declare the type for the user login data
-type LoginData = z.infer<typeof loginSchema>;
+export type LoginData = z.infer<typeof loginSchema>;
 
 // Service function to handle user registration
 export const registerUser = async (userData: RegisterData) => {

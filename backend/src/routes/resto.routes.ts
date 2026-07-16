@@ -5,8 +5,8 @@ import { protect } from "../middlewares/auth.middleware";
 const router = Router();
 
 // Resto routes
-router.post("/create", protect, createRestaurant);
-router.get("/get", protect, getRestaurant);
-router.put("/update", protect,updateRestaurantInfo);
+router.post("/", protect, createRestaurant);
+router.get("/", protect, getRestaurant);
+router.put("/", protect, updateRestaurantInfo);
 
 export default router;

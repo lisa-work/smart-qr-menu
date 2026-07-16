@@ -5,8 +5,8 @@ import {getRestaurantOrThrow, getCategoryOrThrow} from "../utils";
 import { categoryValidation, updateCategoryValidation } from "../validators/category.validation";
 import { z } from "zod";
 
-type CreateCategoryData = z.infer<typeof categoryValidation>;
-type UpdateCategoryData = z.infer<typeof updateCategoryValidation>;
+export type CreateCategoryData = z.infer<typeof categoryValidation>;
+export type UpdateCategoryData = z.infer<typeof updateCategoryValidation>;
 
 export const createCategory = async (ownerId: number, categoryData: CreateCategoryData) => {
     const restaurant = await getRestaurantOrThrow(ownerId);

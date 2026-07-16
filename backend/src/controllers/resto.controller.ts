@@ -2,6 +2,7 @@ import { asyncHandler } from "../middlewares/asyncHandler";
 import { Request, Response } from "express";
 import { createNewRestaurant, getRestaurantByOwnerId, updateRestaurant } from "../services/resto.service";
 import { restaurantValidation, updateRestaurantValidation } from "../validators/resto.validation";
+import { getUserId } from "../utils";
 
 // Controller function to create a new restaurant
 export const createRestaurant = asyncHandler(async (req: Request, res: Response) => {
@@ -13,10 +14,7 @@ export const createRestaurant = asyncHandler(async (req: Request, res: Response)
 
     const validatedData = parsed.data;
 
-    const userId = req.user?.id;
-    if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
+    const userId = getUserId(req);
 
     const newRestaurant = await createNewRestaurant(userId, validatedData);
 
@@ -28,10 +26,7 @@ export const createRestaurant = asyncHandler(async (req: Request, res: Response)
 
 // Controller function to get a restaurant by owner ID
 export const getRestaurant = asyncHandler(async (req: Request, res: Response) => {
-    const userId = req.user?.id;
-    if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
+    const userId = getUserId(req);
 
     const restaurant = await getRestaurantByOwnerId(userId);
     return res.status(200).json({
@@ -51,10 +46,7 @@ export const updateRestaurantInfo = asyncHandler(async (req: Request, res: Respo
         });
     }
 
-    const userId = req.user?.id;
-    if (!userId) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
+    const userId = getUserId(req);
 
     const updatedRestaurant = await updateRestaurant(userId, parsed.data);
     return res.status(200).json({

@@ -5,8 +5,8 @@ import { restaurantValidation, updateRestaurantValidation } from "../validators/
 import { z } from "zod";
 
 // Declare the type for the restaurant creation data
-type CreateRestaurantData = z.infer<typeof restaurantValidation>;
-type UpdateRestaurantData = z.infer<typeof updateRestaurantValidation>;
+export type CreateRestaurantData = z.infer<typeof restaurantValidation>;
+export type UpdatedRestaurantData = z.infer<typeof updateRestaurantValidation>;
 
 // Service function to create a new restaurant for a specific owner
 export const createNewRestaurant = async (ownerId: number, restaurantData: CreateRestaurantData) => {
@@ -53,7 +53,7 @@ export const getRestaurantByOwnerId = async (ownerId: number) => {
 }
 
 // Service function to update a restaurant's information for a specific owner
-export const updateRestaurant = async (ownerId: number, restaurantData: UpdateRestaurantData) => {
+export const updateRestaurant = async (ownerId: number, restaurantData: UpdatedRestaurantData) => {
 
     await getRestaurantOrThrow(ownerId); // Ensure the restaurant exists before updating
 

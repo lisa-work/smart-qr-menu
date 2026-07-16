@@ -1,23 +1,6 @@
-// Declare the type for the user registration data
-export interface RegisterData {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-}
+import {registerSchema, loginSchema, userSchema} from "@/schema/auth";
+import { z } from "zod";
 
-// Declare the type for the user login data
-export interface LoginData {
-    email: string;
-    password: string;
-}
-
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-    role: "USER" | "Owner";
-    createdAt: Date;
-    updatedAt: Date;
-}
+export type RegisterData = z.infer<typeof registerSchema>;
+export type LoginData = z.infer<typeof loginSchema>;
+export type User = z.infer<typeof userSchema>;

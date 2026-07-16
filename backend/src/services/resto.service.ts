@@ -39,16 +39,8 @@ export const createNewRestaurant = async (ownerId: number, restaurantData: Creat
 
 // Service function to get a restaurant by its owner ID
 export const getRestaurantByOwnerId = async (ownerId: number) => {
-    const restaurant = await prisma.restaurant.findUnique({
-        where: {
-            ownerId: ownerId
-        }
-    })
-
-    if (!restaurant) {
-        throw new AppErrors("Restaurant not found", 404);
-    }
-
+    
+    const restaurant = await getRestaurantOrThrow(ownerId);
     return restaurant;
 }
 

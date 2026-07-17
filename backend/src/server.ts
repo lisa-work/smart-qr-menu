@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { authRoutes, restoRoutes, categoryRoutes } from "./routes";
+import { authRoutes, restoRoutes, categoryRoutes, foodRoutes } from "./routes";
 import { errorHandler } from "./middlewares/error.middleware";
 
 const app = express();
@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurant", restoRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/foods", foodRoutes);
 
 // Other routes
 app.use(errorHandler);

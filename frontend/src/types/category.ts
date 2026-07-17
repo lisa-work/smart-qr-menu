@@ -9,6 +9,7 @@ type CategoryFields = {
     id: string;
     type: "text" | "textarea";
     placeholder: string;
+    required?: boolean;
 }
 
 export const CategoryFields: CategoryFields[] = [

@@ -5,7 +5,7 @@ import { protect } from "../middlewares/auth.middleware";
 const router = Router();
 
 router.post("/", protect, createNewFood);
-router.get("/all", protect, getAllFoods);
+router.get("/", protect, getAllFoods);
 router.get("/:foodId", protect, getFoodListById);
 router.get("/category/:categoryId", protect, getFoodListByCategoryId);
 router.put("/:foodId", protect, updateFoodListById);

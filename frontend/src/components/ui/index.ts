@@ -51,6 +51,8 @@ export {
   TableCaption,
 } from "./table"
 export { Textarea } from "./textarea"
+export { Toggle } from "./toggle"
+export {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "./select"
 
 
 

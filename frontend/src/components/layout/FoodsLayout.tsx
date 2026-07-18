@@ -1,8 +1,30 @@
-import React from 'react'
+import { Card } from "../ui";
 
-function FoodsLayout() {
+interface FoodLayoutProps {
+    title: string;
+    subtitle?: string;
+    children: React.ReactNode;
+    footer?: React.ReactNode;
+}
+
+function FoodsLayout({title, subtitle, children, footer}: FoodLayoutProps) {
   return (
-    <div>FoodsLayout</div>
+    <div>
+        <div className="flex flex-col items-center justify-center">
+            <h1>{title}</h1>
+            {subtitle && <p>{subtitle}</p>}
+        </div>
+        <div>
+            <Card>
+                {children}
+            </Card>
+        </div>
+        {footer && (
+            <div className="text-xs text-muted-foreground">
+                {footer}
+            </div>
+        )}
+    </div>
   )
 }
 

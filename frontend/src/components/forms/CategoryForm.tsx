@@ -79,7 +79,7 @@ function CategoryForm({
     >
       {CategoryFields.map((field) => (
         <div key={field.id}>
-          <Label>
+          <Label htmlFor={field.id} className="mb-1 font-semibold">
             {field.label}
           </Label>
 

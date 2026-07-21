@@ -52,7 +52,9 @@ export {
 } from "./table"
 export { Textarea } from "./textarea"
 export { Toggle } from "./toggle"
-export {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "./select"
+export {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, SelectLabel,} from "./select"
+export { Separator } from "./separator"
+export { default as MenuCard } from "./menuCard"
 
 
 

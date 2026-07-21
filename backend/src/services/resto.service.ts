@@ -1,6 +1,6 @@
 import { prisma } from "../config/prisma";
 import { AppErrors } from "../errors/AppErrors";
-import { getRestaurantOrThrow } from "../utils"
+import { ensureSlugAvailable, generateSlug, getRestaurantOrThrow } from "../utils"
 import { restaurantValidation, updateRestaurantValidation } from "../validators/resto.validation";
 import { z } from "zod";
 
@@ -26,9 +26,13 @@ export const createNewRestaurant = async (ownerId: number, restaurantData: Creat
     if (owner?.restaurant)
         throw new AppErrors("You already have a restaurant", 400)
 
+    const slug = generateSlug(restaurantData.name);
+    await ensureSlugAvailable(slug);
+
     const newRestaurant = await prisma.restaurant.create({
         data: {
             ...restaurantData,
+            slug,
             ownerId: ownerId
         }
     })

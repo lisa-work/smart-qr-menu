@@ -1,4 +1,4 @@
-import {Router} from "express";
+import { Router } from "express";
 import { createNewFood, getAllFoods, getFoodListById, getFoodListByCategoryId, updateFoodListById, deleteFoodListById } from "../controllers/food.controller";
 import { protect } from "../middlewares/auth.middleware";
 import upload from "../middlewares/upload.middleware";

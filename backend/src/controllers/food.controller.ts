@@ -11,7 +11,7 @@ export const createNewFood = asyncHandler (async (req: Request, res: Response) =
     }
     const validatedData = parsed.data;
     const userId = getUserId(req);
-    const newFood = await createFood(userId, validatedData);
+    const newFood = await createFood(userId, validatedData, req.file!);
     return res.status(201).json({
         message: "Food created successfully",
         food: newFood

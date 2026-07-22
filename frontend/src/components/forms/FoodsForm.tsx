@@ -43,6 +43,12 @@ const defaultFoodValues: FoodData = {
   featured: false,
 };
 
+
+// const preview =
+//     URL.createObjectURL(file);
+
+// <img src={preview} />
+
 function FoodsForm({
   food,
   categories,
@@ -100,7 +106,7 @@ function FoodsForm({
                 );
 
               case "text":
-              case "url":
+              case "file":
                 return (
                   <Input
                     id={field.id}
@@ -201,6 +207,22 @@ function FoodsForm({
           ? "Save Changes"
           : "Create Food"}
       </Button>
+
+      {/* const formData = new FormData();
+
+      formData.append("name", values.name);
+      formData.append("price", values.price.toString());
+      formData.append("description", values.description);
+      formData.append(
+          "categoryId",
+          values.categoryId.toString()
+      );
+      formData.append("image", selectedFile);
+
+      await axios.post(
+          "/api/foods",
+          formData
+      ); */}
     </form>
   );
 }

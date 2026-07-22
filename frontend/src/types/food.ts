@@ -13,7 +13,7 @@ type FoodFields = {
 }
 
 export const FoodFields: FoodFields[] = [
-    { label: "Image", id: "image", type: "url" },
+    { label: "Image", id: "image", type: "file" },
     { label: "Name", id: "name", type: "text", placeholder: "Enter food name", required: true },
     { label: "Description", id: "description", type: "textarea", placeholder: "Enter food description"},
     { label: "Price", id: "price", type: "number", placeholder: "0.00", required: true },

@@ -2,16 +2,21 @@ import { prisma } from "../config/prisma";
 import { getRestaurantOrThrow, getCategoryOrThrow, getFoodOrThrow } from "../utils";
 import { foodValidation, updateFoodValidation } from "../validators/food.validation";
 import { z } from "zod";
+import StorageService  from "./storage.service";
 
 export type CreateFoodData = z.infer<typeof foodValidation>;
 export type UpdateFoodData = z.infer<typeof updateFoodValidation>;
 
-export const createFood = async (ownerId: number, foodData: CreateFoodData) => {
+
+
+export const createFood = async (ownerId: number, foodData: CreateFoodData, image: Express.Multer.File) => {
     const restaurant = await getRestaurantOrThrow(ownerId);
+    const imagePath = StorageService.uploadImage(image)
     await getCategoryOrThrow(foodData.categoryId, restaurant.id);
         const newFood = await prisma.food.create({
             data: {
-                ...foodData
+                ...foodData,
+                image: imagePath,
             },
         });
         return newFood;

@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 import { authRoutes, restoRoutes, categoryRoutes, foodRoutes, menuRoutes } from "./routes";
 import { errorHandler } from "./middlewares/error.middleware";
+import path from "path";
 
 const app = express();
 
@@ -22,7 +23,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/restaurant", restoRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/foods", foodRoutes);
-app.use("api/menu", menuRoutes)
+app.use("/api/menu", menuRoutes)
+app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "../uploads"))
+);
 
 // Other routes
 app.use(errorHandler);

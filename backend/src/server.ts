@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { authRoutes, restoRoutes, categoryRoutes, foodRoutes, menuRoutes, dashboardRoutes } from "./routes";
+import { authRoutes, restoRoutes, categoryRoutes, foodRoutes, menuRoutes, dashboardRoutes, qrRoutes } from "./routes";
 import { errorHandler } from "./middlewares/error.middleware";
 import path from "path";
 
@@ -25,6 +25,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/foods", foodRoutes);
 app.use("/api/menu", menuRoutes)
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/restaurant", qrRoutes);
 app.use(
     "/uploads",
     express.static(path.join(__dirname, "../uploads"))

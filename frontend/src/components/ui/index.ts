@@ -55,6 +55,7 @@ export { Toggle } from "./toggle"
 export {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, SelectLabel,} from "./select"
 export { Separator } from "./separator"
 export { default as MenuCard } from "./menuCard"
+export { default as DashboardCard } from "./dashboard-card"
 
 
 

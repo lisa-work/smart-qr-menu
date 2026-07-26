@@ -78,3 +78,15 @@ export const loginUser = async (loginData: LoginData) => {
     return safeUser;
 }
 
+export const getCurrentUser = async (userId: number) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId,
+        },
+        include: {
+            restaurant: true,
+        },
+    });
+
+    return user;
+};

@@ -11,7 +11,7 @@ function RegisterPage() {
                 Already have an account? {" "}
                 <Link
                 to="/login"
-                className="font-medium text-emerald-600 hover:text-emerald-700"
+                className="font-medium text-emerald-600 hover:text-emerald-700 hover:underline underline-offset-2"
                 >
                  Log in
                 </Link>

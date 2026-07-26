@@ -41,7 +41,7 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
         {/* Render the email input field with validation */}
         <Label htmlFor="email">Email</Label>
         <Input 
@@ -64,13 +64,13 @@ function LoginForm() {
                 autoComplete="password"
                 {...form.register('password')}
             />
-            <button
+            <Button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
             >
                 {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
-            </button>
+            </Button>
         </div>
         {/* Render the password validation error message */}
         <p className="text-sm text-red-500">

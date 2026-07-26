@@ -63,14 +63,12 @@ function DashboardPage() {
         },
     ];
 
+    const title = `Welcome back, ${user?.name}`;
+
   return (
     <div className="m-5">
         {/* Overview of the dashboard */}
-        <div className="text-left m-5">
-            <h2>Welcome back, {user?.name}</h2>
-            <p className="text-xs md:text-sm text-gray-500">Here's an overview of your menu</p>
-        </div>
-        <DashboardLayout>
+        <DashboardLayout title={title} subtitle="Here's an overview of your menu">
             {cards.map((card) => (
                 <DashboardCard count={card.count} label={card.label} icon={card.icon}/>
             ))}

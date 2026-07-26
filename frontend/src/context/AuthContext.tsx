@@ -35,7 +35,7 @@ export function AuthProvider({ children } : AuthProviderProps) {
         try {
         const response = await authService.getCurrentUser();
 
-        setUser(response.user);
+        setUser(response.data);
         } catch {
         setUser(null);
         } finally {

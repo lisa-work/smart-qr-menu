@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react'
 import type { User, LoginData } from '../types/auth';
 import authService from '../services/auth';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 // Define the shape of the authentication context
 interface AuthContextProps {
@@ -21,6 +22,9 @@ interface AuthProviderProps {
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export function AuthProvider({ children } : AuthProviderProps) {
+
+    const navigate = useNavigate();
+
     // Initialize the user and loading state
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
@@ -47,7 +51,13 @@ export function AuthProvider({ children } : AuthProviderProps) {
         try {
             setLoading(true);
             const { user } = await authService.login(data);
+            const me = await authService.getCurrentUser();
             setUser(user);
+            if (!me.data.restaurant) {
+                navigate('/restaurant');
+            } else {
+                navigate('/dashboard');
+            }
         } finally {
             setLoading(false);
         }

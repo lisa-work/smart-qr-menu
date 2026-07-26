@@ -70,6 +70,7 @@ export function AuthProvider({ children } : AuthProviderProps) {
             await authService.logout();
             setUser(null);
             toast.success("Logged out successfully.");
+            navigate('/login');
         } catch (error) {
             toast.error("Logout failed. Please try again.");
         } finally {

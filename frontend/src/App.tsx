@@ -15,17 +15,13 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/menu/:slug" element={<CustomerMenuPage />} />
-          <Route path="/restaurant" element={<RestaurantSettingsPage />} />
-          <Route path="/categories" element={<CategoryPage />} />
-          <Route path="/foods" element={<FoodPage />} />
-          <Route path="/dashboard" element={<DashboardPage/>} />
 
-        {/* <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
           <Route path="/restaurant" element={<RestaurantSettingsPage />} />
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/foods" element={<FoodPage />} />
           <Route path="/dashboard" element={<DashboardPage/>} />
-        </Route> */}
+        </Route>
       </Routes>
     </>
   )

@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import dashboardService from "@/services/dashboard";
 import type { DashboardResponse } from "@/types/dashboard";
 import { toast } from "react-hot-toast";
-import { CiStar, CiWarning } from "react-icons/ci";
 import { TbCategory } from "react-icons/tb";
-import { IoFastFoodOutline } from "react-icons/io5";
+import { IoFastFoodOutline, IoWarningOutline } from "react-icons/io5";
+import { useAuth } from "@/hooks/useAuth";
+import { DashboardLayout } from "@/components";
+import { FaRegStar } from "react-icons/fa";
 
 function DashboardPage() {
   const [dashboardData, setDashboardData] = useState<DashboardResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -41,30 +44,47 @@ function DashboardPage() {
         {
             label: "Foods",
             count: dashboardData.cards.foods,
-            icon: <IoFastFoodOutline />,
+            icon: <IoFastFoodOutline size={50} color="404c21" className="custom-tailwind-class" style={{ backgroundColor: "d0f4de", padding: "10px", borderRadius: "20%" }}/>,
         },
         {
             label: "Categories",
             count: dashboardData.cards.categories,
-            icon: <TbCategory />,
+            icon: <TbCategory size={50} color="118ab2" className="custom-tailwind-class" style={{ backgroundColor: "a9def9", padding: "10px", borderRadius: "20%" }}/>,
         },
         {
             label: "Featured",
             count: dashboardData.cards.featured,
-            icon: <CiStar />,
+            icon: <FaRegStar size={50} color="e09f3e" className="custom-tailwind-class" style={{ backgroundColor: "fcf6bd", padding: "10px", borderRadius: "20%" }}/>,
         },
         {
             label: "Unavailable",
             count: dashboardData.cards.unavailable,
-            icon: <CiWarning />,
+            icon: <IoWarningOutline size={50} color="9e2a2b" className="custom-tailwind-class" style={{ backgroundColor: "ffa5ab", padding: "10px", borderRadius: "20%" }}/>,
         },
     ];
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {cards.map((card) => (
-            <DashboardCard count={card.count} label={card.label} />
-        ))}
+    <div className="m-5">
+        {/* Overview of the dashboard */}
+        <div className="text-left m-5">
+            <h2>Welcome back, {user?.name}</h2>
+            <p className="text-xs md:text-sm text-gray-500">Here's an overview of your menu</p>
+        </div>
+        <DashboardLayout>
+            {cards.map((card) => (
+                <DashboardCard count={card.count} label={card.label} icon={card.icon}/>
+            ))}
+        </DashboardLayout>
+
+        {/* Analysis */}
+        <div className="mx-5 mt-8">
+            <h2 className="text-left m-5">Analysis</h2>
+        </div>
+
+        {/* Quick Availability */}
+        <div className="mx-5 mt-8">
+            <h2 className="text-left m-5">Quick Availability</h2>
+        </div>
     </div>
   )
 }

@@ -59,13 +59,13 @@ function RegisterForm() {
         <Label htmlFor="password">Password</Label>
         <div className="relative">
             <Input type={ showPassword ? "text" : "password" } placeholder="Password" id="password" {...form.register('password')} />
-            <button
+            <Button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
             >
                 {showPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
-            </button>
+            </Button>
         </div>
         {/* Render the password validation error message */}
         <p className="text-sm text-red-500">
@@ -76,13 +76,13 @@ function RegisterForm() {
         <Label htmlFor="confirmPassword">Confirm Password</Label>
         <div className="relative">
             <Input type={ showConfirmPassword ? "text" : "password" } placeholder="Confirm Password" id="confirmPassword" {...form.register('confirmPassword')} />
-            <button
+            <Button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute inset-y-0 right-0 flex items-center pr-3"
             >
                 {showConfirmPassword ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
-            </button>
+            </Button>
         </div>
         {/* Render the confirm password validation error message */}    
         <p className="text-sm text-red-500">

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { registerSchema, loginSchema } from "../validators/auth.validation";
-import { registerUser, loginUser } from "../services/auth.service";
+import { registerUser, loginUser, getCurrentUser } from "../services/auth.service";
 import { asyncHandler } from "../middlewares/asyncHandler";
-import { generateToken } from "../utils";
+import { generateToken, getRestaurantOrThrow, getUserId } from "../utils";
 
 export const register = asyncHandler(
     async (req: Request, res: Response) => {
@@ -62,12 +62,15 @@ export const login = asyncHandler(
 )
 
 // Controller to get the current logged-in user
-export const getCurrentUser = (req: Request, res: Response) => {
-    return res.json({
+export const getCurrent = asyncHandler(async (req: Request, res: Response) => {
+    const userId = getUserId(req);
+    const user = await getCurrentUser(userId);
+
+    res.json({
         success: true,
-        user: req.user,
+        data: user,
     });
-};
+});
 
 // Controller to log out the user by clearing the token cookie
 export const logoutUser = (req: Request, res: Response) => {

@@ -8,17 +8,17 @@ function LoginPage() {
         subtitle="Log in to your account" 
         footer={
             <div className="space-y-2 text-center">
-            <p>Forgot password?</p>
+                <p className="font-medium text-emerald-600 hover:text-emerald-700 hover:underline underline-offset-2 hover:cursor-pointer">Forgot password?</p>
 
-            <p>
-                Don't have an account?{" "}
-                <Link
-                to="/register"
-                className="font-medium text-emerald-600 hover:text-emerald-700"
-                >
-                Create one
-                </Link>
-            </p>
+                <p>
+                    Don't have an account?{" "}
+                    <Link
+                    to="/register"
+                    className="font-medium text-emerald-600 hover:text-emerald-700 hover:underline underline-offset-2"
+                    >
+                    Create one
+                    </Link>
+                </p>
             </div>
         }>
             <LoginForm/>

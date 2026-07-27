@@ -7,7 +7,7 @@ export type UpdatedRestaurantData = Partial<RestaurantData>;
 export type RestaurantSettingsType = {
     label: string;
     id: string;
-    type: "text" | "number" | "email" | "boolean" | "select" | "textarea";
+    type: "text" | "number" | "email" | "boolean" | "select" | "textarea" | "file";
     subtitle?: string;
     required?: boolean;
     placeholder?: string;
@@ -15,7 +15,7 @@ export type RestaurantSettingsType = {
 }
 
 export const RestaurantSettings: RestaurantSettingsType[] = [
-    { label: "Logo", id: "logo", type: "text", subtitle: "Square logo works best" },
+    { label: "Logo", id: "logo", type: "file", subtitle: "Square logo works best" },
     { label: "Restaurant Name", id: "name", type: "text", placeholder: "The Golden Fork", required: true },
     { label: "Description", id: "description", type: "textarea", placeholder: "Fresh, seasonal cuisine crafted with love" },
     { label: "Email", id: "email", type: "email", placeholder: "info@therestaurant.com" },

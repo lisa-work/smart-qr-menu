@@ -1,7 +1,7 @@
 import './App.css'
 import { Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage, RegisterPage, RestaurantSettingsPage, 
-  CustomerMenuPage, DashboardPage, FoodPage, CategoryPage } from './pages';
+  CustomerMenuPage, DashboardPage, FoodPage, CategoryPage, QRPage } from './pages';
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from './pages/auth/ProtectedRoute';
 
@@ -21,6 +21,7 @@ function App() {
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/foods" element={<FoodPage />} />
           <Route path="/dashboard" element={<DashboardPage/>} />
+          <Route path="/qr-code" element={<QRPage/>} />
         </Route>
       </Routes>
     </>

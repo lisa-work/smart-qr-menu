@@ -38,7 +38,12 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
 
             {RestaurantSettings.map((setting) => (
                 <div key={setting.id} className="space-y-2 md:space-y-3">
-                    <Label className="block text-sm font-medium text-gray-700 text-left">{setting.label}</Label>
+                    <Label className="block text-sm font-medium text-gray-700 text-left">
+                        {setting.label}
+                        {setting.required && (
+                            <span className="ml-1 text-red-500">*</span>
+                        )}
+                    </Label>
                     {setting.type === "textarea" ? (
                         <div>
                             <Textarea

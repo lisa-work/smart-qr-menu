@@ -166,7 +166,7 @@ function FoodPage() {
   if (pageLoading) {
     return (
       <FoodsLayout
-        title="Foods"
+        title="Menu items"
         subtitle="Manage your restaurant's food items"
       >
         <div className="py-8 text-center">
@@ -184,9 +184,17 @@ function FoodPage() {
 
   return (
     <FoodsLayout
-      title="Foods"
+      title="Menu Items"
       subtitle="Manage your restaurant's food items"
     >
+
+      {/* Food List */}
+      <FoodList
+        foods={foods}
+        onEdit={setSelectedFood}
+        onDelete={handleDelete}
+      />
+
       {/* Food Form */}
       <FoodsForm
         food={selectedFood}
@@ -208,13 +216,6 @@ function FoodPage() {
           </button>
         </div>
       )}
-
-      {/* Food List */}
-      <FoodList
-        foods={foods}
-        onEdit={setSelectedFood}
-        onDelete={handleDelete}
-      />
     </FoodsLayout>
   );
 }

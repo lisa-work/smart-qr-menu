@@ -52,7 +52,7 @@ function CategoryPage() {
       const response =
         await categoryService.getCategories();
 
-      setCategories(response.categories);
+      setCategories(response.category);
     } catch (error) {
       console.error(error);
 

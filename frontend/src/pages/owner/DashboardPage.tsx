@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import { TbCategory } from "react-icons/tb";
 import { IoFastFoodOutline, IoWarningOutline } from "react-icons/io5";
 import { useAuth } from "@/hooks/useAuth";
-import { DashboardLayout } from "@/components";
+import { GeneralLayout } from "@/components";
 import { FaRegStar } from "react-icons/fa";
 
 function DashboardPage() {
@@ -68,11 +68,11 @@ function DashboardPage() {
   return (
     <div>
         {/* Overview of the dashboard */}
-        <DashboardLayout title={title} subtitle="Here's an overview of your menu">
+        <GeneralLayout title={title} subtitle="Here's an overview of your menu">
             {cards.map((card) => (
                 <DashboardCard count={card.count} label={card.label} icon={card.icon}/>
             ))}
-        </DashboardLayout>
+        </GeneralLayout>
 
         {/* Analysis */}
         <div className="mx-5 mt-8">

@@ -66,7 +66,7 @@ function DashboardPage() {
     const title = `Welcome back, ${user?.name}`;
 
   return (
-    <div className="m-5">
+    <div>
         {/* Overview of the dashboard */}
         <DashboardLayout title={title} subtitle="Here's an overview of your menu">
             {cards.map((card) => (

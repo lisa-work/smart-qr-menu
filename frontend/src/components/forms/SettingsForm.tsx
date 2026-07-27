@@ -37,14 +37,27 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
             {RestaurantSettings.map((setting) => (
-                <div key={setting.id}>
-                    <Label className="block text-sm font-medium text-gray-700">{setting.label}</Label>
+                <div key={setting.id} className="space-y-2 md:space-y-3">
+                    <Label className="block text-sm font-medium text-gray-700 text-left">{setting.label}</Label>
                     {setting.type === "textarea" ? (
                         <div>
                             <Textarea
                                 {...register(setting.id as keyof RestaurantData)}
                                 placeholder={setting.placeholder}
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                className="mt-1 block w-[80%] border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            />
+                            <p className="text-sm text-red-500">
+                                {errors[setting.id as keyof RestaurantData]?.message}
+                            </p>
+                        </div>
+                    ) : setting.type === "file" ? (
+                        <div>
+                            <Input
+                                {...register(setting.id as keyof RestaurantData)}
+                                type="file"
+                                placeholder={setting.placeholder}
+                                className="mt-1 w-[80%] flex items-center justify-center h-fit cursor-pointer rounded-md border border-gray-300 bg-white
+                                text-xs text-gray-700 shadow-sm hover:font-medium"
                             />
                             <p className="text-sm text-red-500">
                                 {errors[setting.id as keyof RestaurantData]?.message}
@@ -56,7 +69,7 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
                                 {...register(setting.id as keyof RestaurantData)}
                                 type={setting.type}
                                 placeholder={setting.placeholder}
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                className="mt-1 block w-[80%] border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             />
                             <p className="text-sm text-red-500">
                                 {errors[setting.id as keyof RestaurantData]?.message}

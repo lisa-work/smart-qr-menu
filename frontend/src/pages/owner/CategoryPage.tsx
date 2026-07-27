@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import {
   CategoryForm,
-  CategoryLayout,
+  GeneralLayout,
 } from "@/components";
 
 import { Button } from "@/components/ui";
@@ -158,7 +158,7 @@ function CategoryPage() {
   }, []);
 
   return (
-    <CategoryLayout
+    <GeneralLayout
       title="Categories"
       subtitle="Manage your restaurant categories."
     >
@@ -209,7 +209,7 @@ function CategoryPage() {
           </div>
         ))}
       </div>
-    </CategoryLayout>
+    </GeneralLayout>
   );
 }
 

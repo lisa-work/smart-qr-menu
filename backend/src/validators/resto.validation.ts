@@ -7,7 +7,6 @@ export const restaurantValidation = z.object({
     openingHours: z.string().trim().optional(),
     logo: z.url().optional(),
     description: z.string().trim().max(500, "Description must be less than 500 characters").optional(),
-    phone: z.string().trim().regex(/^\d{3}-\d{3}-\d{4}$/, "Invalid phone number format").optional(),
     website: z.url().optional(),
 })
 

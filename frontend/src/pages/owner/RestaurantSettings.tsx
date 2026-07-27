@@ -54,7 +54,7 @@ function RestaurantSettingsPage() {
   }, []);
 
   return (
-    <div>
+    <div >
         <SettingsLayout title="Restaurant Settings" subtitle="Configure your restaurant profile">
             <SettingsForm restaurant={restaurant} loading={loading} onSubmit={handleSubmit} />
         </SettingsLayout>

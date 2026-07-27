@@ -8,7 +8,7 @@ const categoryService = {
     },
 
     getCategories: async () => {
-        const response = await api.get("/categories");
+        const response = await api.get("/categories/all");
         return response.data;
     },
 

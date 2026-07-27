@@ -1,4 +1,4 @@
-import { SettingsForm, SettingsLayout } from "@/components"
+import { SettingsForm, GeneralLayout } from "@/components"
 import { useEffect, useState } from "react";
 import type { RestaurantData } from "@/types/restaurant";
 import restaurantService from "@/services/restaurant";
@@ -55,9 +55,9 @@ function RestaurantSettingsPage() {
 
   return (
     <div >
-        <SettingsLayout title="Restaurant Settings" subtitle="Configure your restaurant profile">
+        <GeneralLayout title="Restaurant Settings" subtitle="Configure your restaurant profile">
             <SettingsForm restaurant={restaurant} loading={loading} onSubmit={handleSubmit} />
-        </SettingsLayout>
+        </GeneralLayout>
     </div>
   )
 }

@@ -9,15 +9,13 @@ interface SettingsLayoutProps {
 
 function SettingsLayout({title, subtitle, children, footer}: SettingsLayoutProps) {
   return (
-    <div>
-        <div className="flex flex-col items-center justify-center">
+    <div className="m-5">
+        <div className="text-left mx-3 md:mx-5 my-5 md:my-10">
             <h1>{title}</h1>
-            {subtitle && <p>{subtitle}</p>}
+            <p className="text-xs md:text-sm lg:text-base text-gray-700">{subtitle}</p>
         </div>
         <div>
-            <Card>
                 {children}
-            </Card>
         </div>
         {footer && (
             <div className="text-xs text-muted-foreground">

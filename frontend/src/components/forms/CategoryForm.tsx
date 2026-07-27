@@ -81,6 +81,9 @@ function CategoryForm({
         <div key={field.id}>
           <Label htmlFor={field.id} className="mb-1 font-semibold">
             {field.label}
+            {field.required && (
+              <span className="ml-1 text-red-500">*</span>
+            )}
           </Label>
 
           {field.type === "textarea" ? (

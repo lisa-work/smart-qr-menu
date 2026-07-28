@@ -21,7 +21,7 @@ function App() {
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/foods" element={<FoodPage />} />
           <Route path="/dashboard" element={<DashboardPage/>} />
-          <Route path="/qr-code" element={<QRPage/>} />
+          <Route path="/restaurant/:slug/qr" element={<QRPage/>} />
         </Route>
       </Routes>
     </>

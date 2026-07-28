@@ -1,11 +1,6 @@
-interface GeneralLayoutProps {
-    title: string;
-    subtitle?: string;
-    footer?: string;
-    children: React.ReactNode;
-}
+import type { LayoutProps } from '@/types/layout'
 
-function DashboardLayout({ title, subtitle, footer, children }: GeneralLayoutProps) {
+function DashboardLayout({ title, subtitle, footer, children }: LayoutProps) {
   return (
     <div className="m-5">
         <div className="text-left mx-3 md:mx-5 my-5 md:my-10">

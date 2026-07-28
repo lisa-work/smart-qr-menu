@@ -1,13 +1,6 @@
-import { Card } from "../ui";
+import type { LayoutProps } from '@/types/layout' 
 
-interface FoodLayoutProps {
-    title: string;
-    subtitle?: string;
-    children: React.ReactNode;
-    footer?: React.ReactNode;
-}
-
-function FoodsLayout({title, subtitle, children, footer}: FoodLayoutProps) {
+function FoodsLayout({title, subtitle, children, footer}: LayoutProps) {
   return (
     <div className="m-5">
         <div className="text-left mx-3 md:mx-5 my-5 md:my-10">

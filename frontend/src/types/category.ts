@@ -13,6 +13,6 @@ type CategoryFields = {
 }
 
 export const CategoryFields: CategoryFields[] = [
-    { label: "Category Name", id: "name", type: "text", placeholder: "Enter category name" },
+    { label: "Category Name", id: "name", type: "text", placeholder: "Enter category name", required: true },
     { label: "Description", id: "description", type: "textarea", placeholder: "Enter category description" },
 ];

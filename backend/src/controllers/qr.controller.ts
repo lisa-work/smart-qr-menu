@@ -11,7 +11,7 @@ export const generateQRCode = asyncHandler(async (req: Request, res: Response) =
         throw new Error("CLIENT_URL is not configured.");
     }
 
-    const url = `${clientUrl}/menu/${slug}`;
+    const url = `${clientUrl}/restaurant/${slug}`;
 
     const qr = await getQRCode(url);
 

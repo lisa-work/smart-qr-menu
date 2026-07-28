@@ -24,7 +24,7 @@ function FoodList({
         </h2>
 
         <p className="mt-2 text-sm text-muted-foreground">
-          Create your first food item using the form above.
+          Create your first food item using the Add Item button.
         </p>
       </Card>
     );

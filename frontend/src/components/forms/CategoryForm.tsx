@@ -75,7 +75,7 @@ function CategoryForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4"
+      className="space-y-4 rounded-md p-4 md:p-6"
     >
       {CategoryFields.map((field) => (
         <div key={field.id}>

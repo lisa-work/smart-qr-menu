@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { MdOutlineEdit, MdDeleteOutline} from "react-icons/md";
+import { TiPlus } from "react-icons/ti";
+import { Modal } from "@/components";
 
 import {
   CategoryForm,
-  GeneralLayout,
+  CategoryLayout
 } from "@/components";
 
 import { Button } from "@/components/ui";
@@ -11,6 +14,7 @@ import { Button } from "@/components/ui";
 import categoryService from "@/services/category";
 
 import type { CategoryData } from "@/types/category";
+import { set } from "zod";
 
 type CategoryWithId = CategoryData & {
   id: number;
@@ -21,6 +25,7 @@ function CategoryPage() {
    * Stores every category
    */
   const [categories, setCategories] = useState<CategoryWithId[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   /**
    * Category currently being edited.
@@ -158,18 +163,28 @@ function CategoryPage() {
   }, []);
 
   return (
-    <GeneralLayout
+    <CategoryLayout
       title="Categories"
       subtitle="Manage your restaurant categories."
     >
-      <CategoryForm
-        category={selectedCategory}
-        loading={loading}
-        isEditing={!!selectedCategory}
-        onSubmit={handleSubmit}
-      />
+      <Modal
+        isOpen={modalOpen}
+        title="Add Category"
+        onClose= {() => setModalOpen(false)} 
+      >
+        <CategoryForm
+          category={selectedCategory}
+          loading={loading}
+          isEditing={!!selectedCategory}
+          onSubmit={handleSubmit}
+        />
+      </Modal>
 
-      <div className="mt-8 space-y-3">
+      <div className="mt-8 space-y-3 m-3 md:m-5">
+        <Button className="flex items-center justify-start mb-3 md:mb-5 cursor-pointer" onClick={() => setModalOpen(true)}>
+          <TiPlus className="mr-2" />
+          Add Category
+        </Button>
         {categories.map((category) => (
           <div
             key={category.id}
@@ -194,7 +209,7 @@ function CategoryPage() {
                   setSelectedCategory(category)
                 }
               >
-                Edit
+                <MdOutlineEdit/>
               </Button>
 
               <Button
@@ -203,13 +218,13 @@ function CategoryPage() {
                   handleDelete(category.id)
                 }
               >
-                Delete
+                <MdDeleteOutline/>
               </Button>
             </div>
           </div>
         ))}
       </div>
-    </GeneralLayout>
+    </CategoryLayout>
   );
 }
 

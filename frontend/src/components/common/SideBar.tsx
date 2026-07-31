@@ -1,46 +1,21 @@
-import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { MdRestaurantMenu, MdCategory } from "react-icons/md";
-import { RiQrCodeFill } from "react-icons/ri";
-import { IoMdSettings } from "react-icons/io";
+import { SideBar } from "../../types/sidebar";
+import { SideBarLayout } from "../layout";
+import { MdRestaurantMenu } from "react-icons/md";
 
-interface SideBarProps {
-    icon: React.ReactNode;
-    label: string;
-    path: string;
-};
-
-const SideBar: SideBarProps[] = [
-    {
-        icon: <TbLayoutDashboardFilled />,
-        label: "Dashboard",
-        path: "/dashboard"
-    },
-    {
-        icon: <MdRestaurantMenu />,
-        label: "Menu",
-        path: "/profile"
-    },
-    {
-        icon: <MdCategory />,
-        label: "Categories",
-        path: "/profile"
-    },
-    {
-        icon: <RiQrCodeFill />,
-        label: "QR Code",
-        path: "/profile"
-    },
-    {
-        icon: <IoMdSettings />,
-        label: "Settings",
-        path: "/profile"
-    },
-]
-
-function SideBar({icon, label, isActive, onClick, path} : SideBarProps) {
+function SideBarNav() {
   return (
-    <div>SideBar</div>
+    <div className="m-5">
+        <div className="flex flex-row gap-4 items-center my-4 border-b pt-2 pb-3">
+            <MdRestaurantMenu size={40} color="white" className="bg-black rounded-sm p-1"/>
+            <h2 className="text-left text-xs md:text-sm font-bold">MenuHub</h2>
+        </div>
+        <div className="">
+            {SideBar.map((item, index) => (
+                <SideBarLayout icon={item.icon} label={item.label} path={item.path} />
+            ))}
+        </div>
+    </div>
   )
 }
 
-export default SideBar
+export default SideBarNav

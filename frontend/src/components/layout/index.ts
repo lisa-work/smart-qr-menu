@@ -5,3 +5,4 @@ export { default as GeneralLayout } from './GeneralLayout';
 export { default as CategoryLayout } from './CategoryLayout';
 export { default as SettingsLayout } from './SettingsLayout';
 export { default as QRLayout } from './QRLayout';
+export { default as SideBarLayout } from './SideBarLayout';

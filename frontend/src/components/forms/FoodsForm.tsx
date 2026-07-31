@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { foodSchema } from "@/schema/food";
 import type { FoodData } from "@/types/food";
 import { FoodFields } from "@/types/food";
+import { FaUpload } from "react-icons/fa";
 
 import {
   Button,
@@ -36,7 +37,6 @@ type FoodsFormProps = {
 const defaultFoodValues: FoodData = {
   name: "",
   description: "",
-  image: "",
   price: 0,
   categoryId: 0,
   available: true,
@@ -71,6 +71,8 @@ function FoodsForm({
     defaultValues: defaultFoodValues,
   });
 
+  const [choosenFile, setChoosenFile] = useState<File | null>(null);
+
   useEffect(() => {
     if (food) {
       reset(food);
@@ -82,17 +84,46 @@ function FoodsForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-5"
+      className="space-y-5 border rounded-lg shadow-sm"
     >
+      <div>
       {FoodFields.map((field) => (
-        <div key={field.id} className="space-y-2">
-          <Label htmlFor={field.id}>
-            {field.label}
-            {field.required && (
-              <span className="ml-1 text-red-500">*</span>
-            )}
-          </Label>
+        <div key={field.id} className="grid md:grid-cols-6 space-y-3 md:gap-5">
+          { field.type === "file" && (
+              <div className="col-span-6">
+                <Label className="flex flex-col items-start justify-center text-sm font-medium text-gray-700 text-left cursor-pointer">
+                  {field.label}
+                    <div className="border border-dashed rounded-md flex flex-col items-center justify-centre w-full py-2 md:py-3">
+                      <FaUpload size={50}/>
+                      <Input
+                        {...register(field.id as keyof FoodData)}
+                        type="file"
+                        className="hidden"
+                        onChange={(e) => setChoosenFile(e.target.files?.[0] || null)}
+                      />
+                      <p className="text-xs text-gray-500 text-left">
+                        {choosenFile?.name || "No file chosen"}
+                      </p>
+                      <p className="text-xs text-red-500">
+                        {errors[field.id as keyof FoodData]?.message}
+                      </p>
+                    </div>
+                </Label>
+              </div>
+          )}
 
+          {field.type !== "file" && (
+              <div className="my-2 col-span-1">
+              <Label htmlFor={field.id}>
+                {field.label}
+                {field.required && (
+                  <span className="ml-1 text-red-500">*</span>
+                )}
+              </Label>
+            </div>
+          )}
+          
+          <div className="col-span-5">
           {(() => {
             switch (field.type) {
               case "textarea":
@@ -106,13 +137,12 @@ function FoodsForm({
                 );
 
               case "text":
-              case "file":
                 return (
                   <Input
                     id={field.id}
                     type={field.type}
                     placeholder={field.placeholder}
-                    {...register(field.id as "name" | "image")}
+                    {...register(field.id as "name")}
                   />
                 );
 
@@ -183,6 +213,7 @@ function FoodsForm({
                 return null;
             }
           })()}
+          </div>
 
           {errors[field.id as keyof FoodData] && (
             <p className="text-sm text-red-500">
@@ -191,6 +222,7 @@ function FoodsForm({
           )}
         </div>
       ))}
+      
 
       <Button
         type="submit"
@@ -207,6 +239,7 @@ function FoodsForm({
           ? "Save Changes"
           : "Create Food"}
       </Button>
+      
 
       {/* const formData = new FormData();
 
@@ -223,6 +256,7 @@ function FoodsForm({
           "/api/foods",
           formData
       ); */}
+      </div>
     </form>
   );
 }

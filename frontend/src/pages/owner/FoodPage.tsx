@@ -5,6 +5,7 @@ import {
   FoodsForm,
   FoodsLayout,
   FoodList,
+  Button,
 } from "@/components";
 
 import foodService from "@/services/food";
@@ -12,6 +13,8 @@ import categoryService from "@/services/category";
 
 import type { FoodData } from "@/types/food";
 import type { CategoryData } from "@/types/category";
+import { TiPlus } from "react-icons/ti";
+import { RiSubtractFill } from "react-icons/ri";
 
 /* -------------------------------------------------------------------------- */
 /*                                   Types                                    */
@@ -36,6 +39,7 @@ function FoodPage() {
 
   const [foods, setFoods] = useState<FoodWithId[]>([]);
   const [categories, setCategories] = useState<CategoryWithId[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [selectedFood, setSelectedFood] =
     useState<FoodWithId | null>(null);
@@ -53,7 +57,7 @@ function FoodPage() {
     try {
       const response = await categoryService.getCategories();
 
-      setCategories(response.categories);
+      setCategories(response.category);
     } catch (error) {
       console.error(error);
 
@@ -187,35 +191,53 @@ function FoodPage() {
       title="Menu Items"
       subtitle="Manage your restaurant's food items"
     >
+      <div className="mt-8 space-y-3 m-3 md:m-5">
+        <Button className="flex items-center justify-start mb-3 md:mb-5 cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
+          { modalOpen ? (
+          <div className="flex items-center cursor-pointer">
+            <RiSubtractFill/>
+            <span className="ml-2">Close Form</span>
+          </div>)
+           : (
+            <div className="flex items-center cursor-pointer">
+              <TiPlus className="mr-2" />
+              <span className="ml-2">Add Item</span>
+            </div>
+          )}
+        </Button>
 
-      {/* Food List */}
-      <FoodList
-        foods={foods}
-        onEdit={setSelectedFood}
-        onDelete={handleDelete}
-      />
-
-      {/* Food Form */}
-      <FoodsForm
-        food={selectedFood}
-        categories={categories}
-        loading={submitLoading}
-        isEditing={!!selectedFood}
-        onSubmit={handleSubmit}
-      />
-
-      {/* Cancel Editing */}
-      {selectedFood && (
-        <div className="mt-4 flex justify-end">
-          <button
-            type="button"
-            onClick={handleCancelEdit}
-            className="text-sm text-muted-foreground hover:underline"
-          >
-            Cancel Editing
-          </button>
+      { modalOpen && (
+        <div>
+          {/* Food Form */}
+          <FoodsForm
+            food={selectedFood}
+            categories={categories}
+            loading={submitLoading}
+            isEditing={!!selectedFood}
+            onSubmit={handleSubmit}/>
         </div>
       )}
+
+        {/* Food List */}
+        <FoodList
+          foods={foods}
+          onEdit={setSelectedFood}
+          onDelete={handleDelete}
+        />
+
+        {/* Cancel Editing */}
+        {selectedFood && (
+          <div className="mt-4 flex justify-end">
+            <button
+              type="button"
+              onClick={handleCancelEdit}
+              className="text-sm text-muted-foreground hover:underline"
+            >
+              Cancel Editing
+            </button>
+          </div>
+        )}
+      </div>
     </FoodsLayout>
   );
 }

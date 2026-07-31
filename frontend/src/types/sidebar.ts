@@ -1,7 +1,8 @@
 import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { MdRestaurantMenu, MdCategory } from "react-icons/md";
+import { MdRestaurantMenu, MdCategory, MdDarkMode } from "react-icons/md";
 import { RiQrCodeFill } from "react-icons/ri";
-import { IoMdSettings } from "react-icons/io";
+import { IoMdSettings} from "react-icons/io";
+import { IoLogOut } from "react-icons/io5";
 import type { IconType } from "react-icons";
 
 export interface SideBarProps {
@@ -19,21 +20,31 @@ export const SideBar: SideBarProps[] = [
     {
         icon: MdRestaurantMenu,
         label: "Menu",
-        path: "/profile"
+        path: "/foods"
     },
     {
         icon: MdCategory,
         label: "Categories",
-        path: "/profile"
+        path: "/categories"
     },
     {
         icon: RiQrCodeFill,
         label: "QR Code",
-        path: "/profile"
+        path: "/restaurant/:slug/qr"
     },
     {
         icon: IoMdSettings,
         label: "Settings",
-        path: "/profile"
+        path: "/restaurant"
+    },
+    {
+        icon: MdDarkMode,
+        label: "Dark Mode",
+        path: "/dashboard"
+    },
+    {
+        icon: IoLogOut,
+        label: "Log out",
+        path: "/logout"
     },
 ]

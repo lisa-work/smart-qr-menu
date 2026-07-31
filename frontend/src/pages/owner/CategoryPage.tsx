@@ -14,7 +14,6 @@ import { Button } from "@/components/ui";
 import categoryService from "@/services/category";
 
 import type { CategoryData } from "@/types/category";
-import { set } from "zod";
 
 type CategoryWithId = CategoryData & {
   id: number;

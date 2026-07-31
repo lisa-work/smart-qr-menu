@@ -7,7 +7,7 @@ export type UpdateFoodData = z.infer<typeof updateFoodSchema>;
 type FoodFields = {
     label: string;
     id: keyof FoodData;
-    type: "text" | "textarea" | "number" | "url" | "checkbox" | "file" | "select"| "toggle";
+    type: "text" | "textarea" | "number" | "url" | "checkbox" | "file" | "select"| "toggle" | "image";
     placeholder?: string;
     required?: boolean;
 }

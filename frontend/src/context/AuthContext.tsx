@@ -52,7 +52,7 @@ export function AuthProvider({ children } : AuthProviderProps) {
             setLoading(true);
             const { user } = await authService.login(data);
             const me = await authService.getCurrentUser();
-            setUser(user);
+            setUser(me.data ?? user);
             if (!me.data.restaurant) {
                 navigate('/restaurant');
             } else {

@@ -1,12 +1,19 @@
 import type {SideBarProps} from "@/types/sidebar";
 import {Button} from "@/components/ui"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 function SideBarLayout({icon, label, path}: SideBarProps) {
   const Icon = icon;
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout, user } = useAuth();
+
+  const resolvedPath = path.includes(":slug")
+    ? path.replace(":slug", user?.restaurant?.slug ?? "")
+    : path;
+
+  const isActive = resolvedPath !== "" && location.pathname === resolvedPath;
 
   const handleClick = () => {
     if (path === "/logout") {
@@ -31,7 +38,10 @@ function SideBarLayout({icon, label, path}: SideBarProps) {
   return (
     <Button
     onClick={handleClick}
-    className="w-full cursor-pointer justify-start gap-4 rounded-sm bg-white p-2 text-xs text-black hover:bg-gray-100 md:text-sm">
+    className={isActive
+      ? "w-full cursor-pointer justify-start gap-3 rounded-sm bg-black p-4 text-xs text-white hover:bg-black/90 md:text-sm"
+      : "w-full cursor-pointer justify-start gap-3 rounded-sm bg-white p-4 text-xs text-black hover:bg-gray-100 md:text-sm"
+    }>
         <Icon size={30}/>
         {label}
     </Button>

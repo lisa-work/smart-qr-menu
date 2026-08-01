@@ -9,17 +9,16 @@ export type UpdateFoodData = z.infer<typeof updateFoodValidation>;
 
 
 
-export const createFood = async (ownerId: number, foodData: CreateFoodData, image: Express.Multer.File) => {
+export const createFood = async (ownerId: number, foodData: CreateFoodData, image?: Express.Multer.File) => {
     const restaurant = await getRestaurantOrThrow(ownerId);
-    const imagePath = StorageService.uploadImage(image)
     await getCategoryOrThrow(foodData.categoryId, restaurant.id);
-        const newFood = await prisma.food.create({
-            data: {
-                ...foodData,
-                image: imagePath,
-            },
-        });
-        return newFood;
+    const newFood = await prisma.food.create({
+        data: {
+            ...foodData,
+            image: image ? StorageService.uploadImage(image) : foodData.image,
+        },
+    });
+    return newFood;
 }
 
 export const getFoods = async (ownerId: number) => {
@@ -60,21 +59,23 @@ export const getFoodByCategoryId = async (ownerId: number, categoryId: number) =
     return food;
 }
 
-export const updateFoodById = async (ownerId: number, foodId: number, updateData: UpdateFoodData) => {
+export const updateFoodById = async (ownerId: number, foodId: number, updateData: UpdateFoodData, image?: Express.Multer.File) => {
     const restaurant = await getRestaurantOrThrow(ownerId);
-    await getFoodOrThrow(foodId, restaurant.id);
+    const existingFood = await getFoodOrThrow(foodId, restaurant.id);
     if (updateData.categoryId) {
         await getCategoryOrThrow(
             updateData.categoryId,
             restaurant.id
         );
     }
+    const imagePath = image ? await StorageService.replaceImage(existingFood.image, image) : undefined;
     const food = await prisma.food.update({
         where: {
             id: foodId,
         },
         data: {
-            ...updateData
+            ...updateData,
+            ...(imagePath ? { image: imagePath } : {}),
         }
     })
     return food;

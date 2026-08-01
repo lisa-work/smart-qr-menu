@@ -31,7 +31,7 @@ type FoodsFormProps = {
   categories: Category[];
   loading: boolean;
   isEditing: boolean;
-  onSubmit: (data: FoodData) => Promise<void>;
+  onSubmit: (data: FormData) => Promise<void>;
 };
 
 const defaultFoodValues: FoodData = {
@@ -75,15 +75,35 @@ function FoodsForm({
 
   useEffect(() => {
     if (food) {
-      reset(food);
+      const { image: _image, ...rest } = food;
+      reset(rest);
+      setChoosenFile(null);
     } else {
       reset(defaultFoodValues);
+      setChoosenFile(null);
     }
   }, [food, reset]);
 
+  const submitForm = async (values: FoodData) => {
+    const formData = new FormData();
+
+    formData.append("name", values.name);
+    formData.append("description", values.description ?? "");
+    formData.append("price", values.price.toString());
+    formData.append("categoryId", values.categoryId.toString());
+    formData.append("available", String(values.available ?? true));
+    formData.append("featured", String(values.featured ?? false));
+
+    if (choosenFile) {
+      formData.append("image", choosenFile);
+    }
+
+    await onSubmit(formData);
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(submitForm)}
       className="space-y-5 border rounded-lg shadow-sm"
     >
       <div>
@@ -96,7 +116,6 @@ function FoodsForm({
                     <div className="border border-dashed rounded-md flex flex-col items-center justify-centre w-full py-2 md:py-3">
                       <FaUpload size={50}/>
                       <Input
-                        {...register(field.id as keyof FoodData)}
                         type="file"
                         className="hidden"
                         onChange={(e) => setChoosenFile(e.target.files?.[0] || null)}
@@ -230,7 +249,7 @@ function FoodsForm({
         disabled={
           loading ||
           isSubmitting ||
-          !isDirty
+          (!isDirty && !choosenFile)
         }
       >
         {loading || isSubmitting

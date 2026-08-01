@@ -4,14 +4,43 @@ import { getUserId } from "../utils";
 import { foodValidation, updateFoodValidation } from "../validators/food.validation";
 import { createFood, getFoods, getFoodById, getFoodByCategoryId, updateFoodById, deleteFoodById } from "../services/food.service";
 
+const toOptionalString = (value: unknown) => {
+    if (typeof value !== "string") return value;
+    return value.trim() === "" ? undefined : value;
+};
+
+const toOptionalNumber = (value: unknown) => {
+    if (value === undefined || value === null || value === "") return undefined;
+    const parsed = Number(value);
+    return Number.isNaN(parsed) ? value : parsed;
+};
+
+const toOptionalBoolean = (value: unknown) => {
+    if (value === undefined || value === null || value === "") return undefined;
+    if (value === true || value === false) return value;
+    if (value === "true") return true;
+    if (value === "false") return false;
+    return value;
+};
+
+const normalizeFoodBody = (body: Request["body"]) => ({
+    name: toOptionalString(body.name),
+    description: toOptionalString(body.description),
+    price: toOptionalNumber(body.price),
+    categoryId: toOptionalNumber(body.categoryId),
+    available: toOptionalBoolean(body.available),
+    featured: toOptionalBoolean(body.featured),
+    image: toOptionalString(body.image),
+});
+
 export const createNewFood = asyncHandler (async (req: Request, res: Response) => {
-    const parsed = foodValidation.safeParse(req.body);
+    const parsed = foodValidation.safeParse(normalizeFoodBody(req.body));
     if (!parsed.success) {
         return res.status(400).json({errors: parsed.error.issues, message: "Invalid food data"});
     }
     const validatedData = parsed.data;
     const userId = getUserId(req);
-    const newFood = await createFood(userId, validatedData, req.file!);
+    const newFood = await createFood(userId, validatedData, req.file);
     return res.status(201).json({
         message: "Food created successfully",
         food: newFood
@@ -57,14 +86,14 @@ export const getFoodListByCategoryId = asyncHandler(async (req: Request, res: Re
 });
 
 export const updateFoodListById = asyncHandler(async (req: Request, res: Response) => {
-    const parsed = updateFoodValidation.safeParse(req.body);
+    const parsed = updateFoodValidation.safeParse(normalizeFoodBody(req.body));
     if (!parsed.success) {
         return res.status(400).json({errors: parsed.error.issues, message: "Invalid food data"});
     }
     const validatedData = parsed.data;
     const userId = getUserId(req);
     const foodId = Number(req.params.foodId);
-    const updatedFood = await updateFoodById(userId, foodId, validatedData);
+    const updatedFood = await updateFoodById(userId, foodId, validatedData, req.file);
     if (!updatedFood) {
         return res.status(404).json({ message: "Food not found" });
     }

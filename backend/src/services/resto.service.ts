@@ -3,13 +3,14 @@ import { AppErrors } from "../errors/AppErrors";
 import { ensureSlugAvailable, generateSlug, getRestaurantOrThrow } from "../utils"
 import { restaurantValidation, updateRestaurantValidation } from "../validators/resto.validation";
 import { z } from "zod";
+import StorageService from "./storage.service";
 
 // Declare the type for the restaurant creation data
 export type CreateRestaurantData = z.infer<typeof restaurantValidation>;
 export type UpdatedRestaurantData = z.infer<typeof updateRestaurantValidation>;
 
 // Service function to create a new restaurant for a specific owner
-export const createNewRestaurant = async (ownerId: number, restaurantData: CreateRestaurantData) => {
+export const createNewRestaurant = async (ownerId: number, restaurantData: CreateRestaurantData, logo?: Express.Multer.File) => {
     const owner = await prisma.user.findUnique({
         where: {
             id: ownerId
@@ -32,6 +33,7 @@ export const createNewRestaurant = async (ownerId: number, restaurantData: Creat
     const newRestaurant = await prisma.restaurant.create({
         data: {
             ...restaurantData,
+            logo: logo ? StorageService.uploadLogo(logo) : restaurantData.logo,
             slug,
             ownerId: ownerId
         }
@@ -49,15 +51,20 @@ export const getRestaurantByOwnerId = async (ownerId: number) => {
 }
 
 // Service function to update a restaurant's information for a specific owner
-export const updateRestaurant = async (ownerId: number, restaurantData: UpdatedRestaurantData) => {
+export const updateRestaurant = async (ownerId: number, restaurantData: UpdatedRestaurantData, logo?: Express.Multer.File) => {
 
-    await getRestaurantOrThrow(ownerId); // Ensure the restaurant exists before updating
+    const existingRestaurant = await getRestaurantOrThrow(ownerId); // Ensure the restaurant exists before updating
+
+    const logoPath = logo ? await StorageService.replaceLogo(existingRestaurant.logo, logo) : undefined;
 
     const restaurant = await prisma.restaurant.update({
         where: {
             ownerId: ownerId
         },
-        data: restaurantData
+        data: {
+            ...restaurantData,
+            ...(logoPath ? { logo: logoPath } : {}),
+        }
     })
 
     return restaurant;

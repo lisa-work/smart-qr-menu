@@ -2,7 +2,7 @@ import type { FoodData } from "../types/food";
 import api from "./axios";
 
 const foodService = {
-    createFood: async (foodData: FoodData) => {
+    createFood: async (foodData: FormData) => {
         const response = await api.post("/foods", foodData);
         return response.data;
     },
@@ -22,7 +22,7 @@ const foodService = {
         return response.data;
     },
 
-    updateFoodById: async (foodId: number, foodData: Partial<FoodData>) => {
+    updateFoodById: async (foodId: number, foodData: FormData) => {
         const response = await api.put(`/foods/${foodId}`, foodData);
         return response.data;
     },

@@ -189,7 +189,7 @@ function CategoryPage() {
             key={category.id}
             className="flex items-center justify-between rounded-md border p-3"
           >
-            <div>
+            <div className="flex flex-col items-start justify-start">
               <p className="font-medium">
                 {category.name}
               </p>
@@ -203,15 +203,18 @@ function CategoryPage() {
 
             <div className="space-x-2">
               <Button
+              className="cursor-pointer"
                 variant="outline"
-                onClick={() =>
-                  setSelectedCategory(category)
-                }
+                onClick={() => {
+                  setSelectedCategory(category);
+                  setModalOpen(true);
+                }}
               >
-                <MdOutlineEdit/>
+                <MdOutlineEdit />
               </Button>
 
               <Button
+              className="cursor-pointer"
                 variant="destructive"
                 onClick={() =>
                   handleDelete(category.id)

@@ -15,7 +15,7 @@ function ProtectedRoute() {
     
     return (
         <div className="flex min-h-screen w-full flex-col lg:flex-row">
-            <aside className="w-full border-b border-border bg-background lg:w-72 lg:border-b-0 lg:border-r">
+            <aside className="w-full border-b border-border bg-background lg:w-65 lg:border-b-0 lg:border-r">
                 <SideBarNav />
             </aside>
             <main className="min-w-0 flex-1">

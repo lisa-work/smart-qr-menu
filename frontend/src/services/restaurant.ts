@@ -2,7 +2,7 @@ import api from "./axios";
 import type { RestaurantData } from "../types/restaurant";
 
 const restaurantService = {
-    createRestaurant: async (restaurantData: RestaurantData) => {
+    createRestaurant: async (restaurantData: FormData) => {
         const response = await api.post("/restaurant", restaurantData);
         return response.data;
     },
@@ -12,7 +12,7 @@ const restaurantService = {
         return response.data;
     },
 
-    updateRestaurant: async (restaurantData: Partial<RestaurantData>) => {
+    updateRestaurant: async (restaurantData: FormData) => {
         const response = await api.put(`/restaurant`, restaurantData);
         return response.data;
     },

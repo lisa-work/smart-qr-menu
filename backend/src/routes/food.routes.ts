@@ -9,7 +9,7 @@ router.post("/", protect, upload.single("image"), createNewFood);
 router.get("/", protect, getAllFoods);
 router.get("/:foodId", protect, getFoodListById);
 router.get("/category/:categoryId", protect, getFoodListByCategoryId);
-router.put("/:foodId", protect, updateFoodListById);
+router.put("/:foodId", protect, upload.single("image"), updateFoodListById);
 router.delete("/:foodId", protect, deleteFoodListById);
 
 export default router;

@@ -10,7 +10,7 @@ function SideBarNav() {
             <MdRestaurantMenu size={40} color="white" className="bg-black rounded-sm p-1"/>
             <h2 className="text-left text-xs md:text-sm font-bold">MenuHub</h2>
         </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         {SideBar.map((item) => (
           <SideBarLayout key={item.label} icon={item.icon} label={item.label} path={item.path} />
             ))}

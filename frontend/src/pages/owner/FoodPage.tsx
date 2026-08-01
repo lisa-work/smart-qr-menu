@@ -73,7 +73,12 @@ function FoodPage() {
     try {
       const response = await foodService.getFoods();
 
-      setFoods(response.foods);
+      setFoods(
+        response.foods.map((food: FoodWithId) => ({
+          ...food,
+          price: Number(food.price),
+        }))
+      );
     } catch (error) {
       console.error(error);
 
@@ -85,7 +90,7 @@ function FoodPage() {
   /*                              Create / Update                             */
   /* ------------------------------------------------------------------------ */
 
-  const handleSubmit = async (data: FoodData) => {
+  const handleSubmit = async (data: FormData) => {
     setSubmitLoading(true);
 
     try {

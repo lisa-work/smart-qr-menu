@@ -22,16 +22,10 @@ function RestaurantSettingsPage() {
     }
   }
 
-  const handleSubmit = async (data: Partial<RestaurantData> & { name?: string }) => {
-    const payload: RestaurantData = {
-      ...(restaurant ?? {}),
-      ...data,
-      name: data.name ?? restaurant?.name ?? "",
-    } as RestaurantData;
-
+  const handleSubmit = async (data: FormData) => {
     if (restaurant) {
       try {
-        await restaurantService.updateRestaurant(payload);
+        await restaurantService.updateRestaurant(data);
         toast.success("Restaurant settings updated successfully.");
       } catch (error) {
         console.error("Failed to update restaurant settings.", error);
@@ -39,7 +33,7 @@ function RestaurantSettingsPage() {
       }
     } else {
       try {
-        await restaurantService.createRestaurant(payload);
+        await restaurantService.createRestaurant(data);
         toast.success("Restaurant created successfully.");
       } catch (error) {
         console.error("Failed to create restaurant.", error);

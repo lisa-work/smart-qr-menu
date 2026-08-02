@@ -1,11 +1,20 @@
 import multer from "multer"
 import { Request } from "express"
 import { randomUUID } from "crypto";
-import path from "path/win32";
+import path from "path";
+import fs from "fs";
+import { UPLOADS_DIR } from "../config/paths";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // cb(error, destination)
+    const subfolder = file.fieldname === "logo" ? "logos" : "foods";
+    const folder = path.join(UPLOADS_DIR, subfolder);
+
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder, { recursive: true });
+    }
+
+    cb(null, folder); // cb(error, destination)
   },
 
   filename: (req, file, cb) => {

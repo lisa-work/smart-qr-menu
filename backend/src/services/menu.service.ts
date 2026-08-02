@@ -7,6 +7,7 @@ export const getRestaurantBySlug = async (slug: string) => {
             slug,
         },
         select: {
+            id: true,
             name: true,
             description: true,
             email: true,
@@ -15,6 +16,31 @@ export const getRestaurantBySlug = async (slug: string) => {
             phone: true,
             website: true,
             openingHours: true,
+            categories: {
+                select: {
+                    id: true,
+                    name: true,
+                    description: true,
+                    foods: {
+                        select: {
+                            id: true,
+                            name: true,
+                            description: true,
+                            price: true,
+                            image: true,
+                            available: true,
+                            featured: true,
+                            categoryId: true,
+                        },
+                        orderBy: {
+                            name: "asc",
+                        },
+                    },
+                },
+                orderBy: {
+                    name: "asc",
+                },
+            },
         }
     })
 
@@ -22,5 +48,10 @@ export const getRestaurantBySlug = async (slug: string) => {
         throw new AppErrors("Restaurant not found", 404);
     }
 
-    return restaurant;
+    const { categories, ...restaurantInfo } = restaurant;
+
+    return {
+        restaurant: restaurantInfo,
+        categories,
+    };
 }

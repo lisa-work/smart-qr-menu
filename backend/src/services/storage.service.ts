@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import { UPLOADS_DIR } from "../config/paths";
 
 class StorageService {
     /**
@@ -10,6 +11,10 @@ class StorageService {
         return `/uploads/foods/${file.filename}`;
     }
 
+    uploadLogo(file: Express.Multer.File): string {
+        return `/uploads/logos/${file.filename}`;
+    }
+
     /**
      * Deletes an image from disk.
      * Safe to call even if the file doesn't exist.
@@ -18,10 +23,13 @@ class StorageService {
         if (!filePath) return;
 
         try {
-            // Remove the leading "/" so path.join works correctly
-            const relativePath = filePath.replace(/^\/+/, "");
+            // Keep only the path inside /uploads so resolution is deterministic.
+            const relativePath = filePath
+                .replace(/\\/g, "/")
+                .replace(/^\/+/, "")
+                .replace(/^uploads\//, "");
 
-            const fullPath = path.join(process.cwd(), relativePath);
+            const fullPath = path.join(UPLOADS_DIR, relativePath);
 
             await fs.unlink(fullPath);
         } catch (error: any) {
@@ -43,6 +51,15 @@ class StorageService {
         await this.deleteImage(oldFilePath);
 
         return this.uploadImage(newFile);
+    }
+
+    async replaceLogo(
+        oldFilePath: string | null,
+        newFile: Express.Multer.File
+    ): Promise<string> {
+        await this.deleteImage(oldFilePath);
+
+        return this.uploadLogo(newFile);
     }
 }
 

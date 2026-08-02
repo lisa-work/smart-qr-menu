@@ -4,27 +4,30 @@ import { LoginPage, RegisterPage, RestaurantSettingsPage,
   CustomerMenuPage, DashboardPage, FoodPage, CategoryPage, QRPage } from './pages';
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from './pages/auth/ProtectedRoute';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
 
   return (
-    <>
-    <Toaster/>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/menu/:slug" element={<CustomerMenuPage />} />
+    <div>
+      <ThemeProvider>
+      <Toaster/>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/menu/:slug" element={<CustomerMenuPage />} />
 
-        <Route element={<ProtectedRoute />}>
-          <Route path="/restaurant" element={<RestaurantSettingsPage />} />
-          <Route path="/categories" element={<CategoryPage />} />
-          <Route path="/foods" element={<FoodPage />} />
-          <Route path="/dashboard" element={<DashboardPage/>} />
-          <Route path="/restaurant/:slug/qr" element={<QRPage/>} />
-        </Route>
-      </Routes>
-    </>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/restaurant" element={<RestaurantSettingsPage />} />
+            <Route path="/categories" element={<CategoryPage />} />
+            <Route path="/foods" element={<FoodPage />} />
+            <Route path="/dashboard" element={<DashboardPage/>} />
+            <Route path="/restaurant/:slug/qr" element={<QRPage/>} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
+    </div>
   )
 }
 

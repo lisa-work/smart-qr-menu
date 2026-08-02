@@ -3,10 +3,11 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 import { authRoutes, restoRoutes, categoryRoutes, foodRoutes, menuRoutes, dashboardRoutes, qrRoutes } from "./routes";
 import { errorHandler } from "./middlewares/error.middleware";
-import path from "path";
+import { UPLOADS_DIR } from "./config/paths";
 
 const app = express();
 
@@ -28,8 +29,14 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/restaurant", qrRoutes);
 app.use(
     "/uploads",
-    express.static(path.join(__dirname, "../uploads"))
+    express.static(UPLOADS_DIR)
 );
+
+// Backward compatibility for files saved before absolute upload path fix.
+const legacyUploadsDir = path.resolve(process.cwd(), "uploads");
+if (legacyUploadsDir !== UPLOADS_DIR) {
+    app.use("/uploads", express.static(legacyUploadsDir));
+}
 
 // Other routes
 app.use(errorHandler);

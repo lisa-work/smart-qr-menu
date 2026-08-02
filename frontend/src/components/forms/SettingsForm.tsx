@@ -9,7 +9,6 @@ import { FaUpload } from "react-icons/fa6";
 type RestaurantFormValues = {
     name: string;
     description?: string;
-    logo?: string;
     email?: string;
     phone?: string;
     address?: string;
@@ -30,7 +29,6 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
         defaultValues: {
             name: "",
             description: "",
-            logo: "",
             email: "",
             phone: "",
             address: "",
@@ -44,7 +42,6 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
             reset({
                 name: restaurant.name ?? "",
                 description: restaurant.description ?? "",
-                logo: restaurant.logo ?? "",
                 email: restaurant.email ?? "",
                 phone: restaurant.phone ?? "",
                 address: restaurant.address ?? "",
@@ -94,9 +91,6 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
                             <p className="text-sm text-gray-500 text-left py-2">
                                 Chosen file: {choosenFile?.name || "No file chosen"}
                             </p>
-                            <p className="text-sm text-red-500">
-                                {errors[setting.id as keyof RestaurantData]?.message}
-                            </p>
                         </div>
                     ) : (
                     <Label className="block text-sm font-medium text-gray-700 text-left">
@@ -109,12 +103,12 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
                     {setting.type === "textarea" ? (
                         <div>
                             <Textarea
-                                {...register(setting.id as keyof RestaurantData)}
+                                {...register(setting.id as keyof RestaurantFormValues)}
                                 placeholder={setting.placeholder}
                                 className="mt-1 block w-[80%] border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             />
                             <p className="text-sm text-red-500">
-                                {errors[setting.id as keyof RestaurantData]?.message}
+                                {errors[setting.id as keyof RestaurantFormValues]?.message}
                             </p>
                         </div>
                     ) : setting.type !== "file" ? (
@@ -126,7 +120,7 @@ function SettingsForm({ restaurant, loading, onSubmit }: RestaurantFormProps) {
                                 className="mt-1 block w-[80%] border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             />
                             <p className="text-sm text-red-500">
-                                {errors[setting.id as keyof RestaurantData]?.message}
+                                {errors[setting.id as keyof RestaurantFormValues]?.message}
                             </p>
                         </div>
                     ) : null}

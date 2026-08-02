@@ -1,6 +1,7 @@
 import { SideBar } from "../../types/sidebar";
 import { SideBarLayout } from "../layout";
 import { MdRestaurantMenu } from "react-icons/md";
+import { ThemeToggle } from "./ThemeToggle";
 
 function SideBarNav() {
 
@@ -11,9 +12,14 @@ function SideBarNav() {
             <h2 className="text-left text-xs md:text-sm font-bold">MenuHub</h2>
         </div>
       <div className="flex flex-col gap-1">
-        {SideBar.map((item) => (
-          <SideBarLayout key={item.label} icon={item.icon} label={item.label} path={item.path} />
-            ))}
+        <div className="border-b">
+          {SideBar.map((item) => (
+            <SideBarLayout key={item.label} icon={item.icon} label={item.label} path={item.path} />
+              ))}
+        </div>
+        <div className="text-left text-sm p-4 gap-3 cursor-pointer">
+          <ThemeToggle/>
+        </div>
         </div>
     </div>
   )

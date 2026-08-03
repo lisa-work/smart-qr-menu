@@ -26,7 +26,7 @@ export const restaurantSchema = z.object({
     openingHours: optionalText,
     logo: optionalUrl,
     description: optionalText.pipe(z.string().trim().max(500, "Description must be less than 500 characters").optional()),
-    phone: optionalText.pipe(z.string().trim().regex(/^\d{3}-\d{3}-\d{4}$/, "Invalid phone number format").optional()),
+    phone: optionalText.pipe(z.string().trim().max(20, "Phone number must be less than 20 characters").optional()),
     website: optionalUrl,
 })
 

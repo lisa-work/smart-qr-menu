@@ -43,13 +43,13 @@ function QRPage() {
                             <img src={qrCode} alt="QR Code" 
                             className="mx-auto border rounded-lg shadow-md hover:shadow-lg p-3 size-60 md:size-80" />
                             <div className="flex flex-row gap-2">
-                                <Button className="bg-white text-black hover:text-white hover:font-bold rounded-sm">
+                                <Button className="text-white hover:font-bold rounded-sm">
                                     <a href={qrCode} download={`qr-code-${slug}.png`}>
                                         Download QR Code
                                     </a>
                                 </Button>
                                 <Button className="rounded-sm cursor-pointer">
-                                    <a>
+                                    <a href={`/menu/${slug}`} target="_blank" rel="noopener noreferrer">
                                         Preview Menu
                                     </a>
                                 </Button>

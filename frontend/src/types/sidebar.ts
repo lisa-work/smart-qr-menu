@@ -38,11 +38,6 @@ export const SideBar: SideBarProps[] = [
         path: "/restaurant"
     },
     {
-        icon: MdDarkMode,
-        label: "Dark Mode",
-        path: "/dashboard"
-    },
-    {
         icon: IoLogOut,
         label: "Log out",
         path: "/logout"

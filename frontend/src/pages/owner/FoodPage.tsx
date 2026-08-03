@@ -14,17 +14,15 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-  MenuCard,
 } from "@/components";
 
 import foodService from "@/services/food";
 import categoryService from "@/services/category";
 
 import type { FoodData } from "@/types/food";
-import type { CategoryData } from "@/types/category";
 import { TiPlus } from "react-icons/ti";
 import { RiSubtractFill } from "react-icons/ri";
-import type { Menu } from "@/types/menu";
+import type { CategoryWithFoods } from "@/types/menu";
 
 /* -------------------------------------------------------------------------- */
 /*                                   Types                                    */
@@ -32,9 +30,12 @@ import type { Menu } from "@/types/menu";
 
 type FoodWithId = FoodData & {
   id: number;
+  category?: {
+    name: string;
+  };
 };
 
-type CategoryWithId = CategoryData & {
+interface CategoryWithFoodAndId extends CategoryWithFoods {
   id: number;
 };
 
@@ -48,11 +49,10 @@ function FoodPage() {
   /* ------------------------------------------------------------------------ */
 
   const [foods, setFoods] = useState<FoodWithId[]>([]);
-  const [categories, setCategories] = useState<CategoryWithId[]>([]);
+  const [categories, setCategories] = useState<CategoryWithFoodAndId[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [menu, setMenu] = useState<Menu | null>(null);
 
   const [selectedFood, setSelectedFood] =
     useState<FoodWithId | null>(null);
@@ -99,20 +99,18 @@ function FoodPage() {
     }
   };
 
-  const filteredCategories = useMemo(() => {
-          if (!menu) return [];
-  
-          return menu.categories
-              .map(category => ({
-                  ...category,
-                  foods: category.foods.filter(food =>
-                      food.name
-                          .toLowerCase()
-                          .includes(search.toLowerCase())
-                  ),
-              }))
-              .filter(category => category.foods.length > 0);
-    }, [menu, search]);
+  const filteredFoods = useMemo(() => {
+    const query = search.toLowerCase();
+
+    return foods.filter((food) => {
+      const matchesCategory =
+        selectedCategory === "all" || food.category?.name === selectedCategory;
+
+      const matchesSearch = food.name.toLowerCase().includes(query);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [foods, search, selectedCategory]);
 
   /* ------------------------------------------------------------------------ */
   /*                              Create / Update                             */
@@ -257,18 +255,6 @@ function FoodPage() {
                 </SelectContent>
             </Select>
         </div>
-
-
-        {/* {filteredCategories.map(category => (
-            <div key={category.name}>
-
-                {category.foods.map(food => (
-                    <MenuCard name={food.name} description={food.description} price={food.price} 
-                    image={food.image} available={food.available} featured={food.featured}
-                    />
-                ))}
-            </div>
-        ))} */}
               
       <div className="mt-8 space-y-3 m-3 md:m-5">
         <Button className="flex items-center justify-start mb-3 md:mb-5 cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
@@ -299,7 +285,7 @@ function FoodPage() {
 
         {/* Food List */}
         <FoodList
-          foods={foods}
+          foods={filteredFoods}
           onEdit={(food) => {
             setSelectedFood(food);
             setModalOpen(true);

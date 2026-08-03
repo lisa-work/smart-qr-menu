@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
@@ -6,6 +6,15 @@ import {
   FoodsLayout,
   FoodList,
   Button,
+  Input,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+  MenuCard,
 } from "@/components";
 
 import foodService from "@/services/food";
@@ -15,6 +24,7 @@ import type { FoodData } from "@/types/food";
 import type { CategoryData } from "@/types/category";
 import { TiPlus } from "react-icons/ti";
 import { RiSubtractFill } from "react-icons/ri";
+import type { Menu } from "@/types/menu";
 
 /* -------------------------------------------------------------------------- */
 /*                                   Types                                    */
@@ -40,6 +50,9 @@ function FoodPage() {
   const [foods, setFoods] = useState<FoodWithId[]>([]);
   const [categories, setCategories] = useState<CategoryWithId[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [menu, setMenu] = useState<Menu | null>(null);
 
   const [selectedFood, setSelectedFood] =
     useState<FoodWithId | null>(null);
@@ -85,6 +98,21 @@ function FoodPage() {
       toast.error("Failed to load foods.");
     }
   };
+
+  const filteredCategories = useMemo(() => {
+          if (!menu) return [];
+  
+          return menu.categories
+              .map(category => ({
+                  ...category,
+                  foods: category.foods.filter(food =>
+                      food.name
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
+                  ),
+              }))
+              .filter(category => category.foods.length > 0);
+    }, [menu, search]);
 
   /* ------------------------------------------------------------------------ */
   /*                              Create / Update                             */
@@ -196,6 +224,52 @@ function FoodPage() {
       title="Menu Items"
       subtitle="Manage your restaurant's food items"
     >
+        {/* Search and Category Selector */}
+        <div className="flex gap-4 items-center flex-row justify-between mx-5">
+            {/* Search Bar */}
+            <Input type="text" placeholder="Search for food..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            {/* Category Selector */}
+            <Select
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+            >
+                <SelectTrigger className="w-full max-w-48">
+                    <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+
+                <SelectContent>
+                    <SelectGroup>
+                        <SelectLabel>Categories</SelectLabel>
+
+                        <SelectItem value="all">
+                            All Categories
+                        </SelectItem>
+
+                        {categories.map(category => (
+                            <SelectItem
+                                key={category.name}
+                                value={category.name}
+                            >
+                                {category.name}
+                            </SelectItem>
+                        ))}
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+        </div>
+
+
+        {/* {filteredCategories.map(category => (
+            <div key={category.name}>
+
+                {category.foods.map(food => (
+                    <MenuCard name={food.name} description={food.description} price={food.price} 
+                    image={food.image} available={food.available} featured={food.featured}
+                    />
+                ))}
+            </div>
+        ))} */}
+              
       <div className="mt-8 space-y-3 m-3 md:m-5">
         <Button className="flex items-center justify-start mb-3 md:mb-5 cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
           { modalOpen ? (
@@ -226,7 +300,10 @@ function FoodPage() {
         {/* Food List */}
         <FoodList
           foods={foods}
-          onEdit={setSelectedFood}
+          onEdit={(food) => {
+            setSelectedFood(food);
+            setModalOpen(true);
+          }}
           onDelete={handleDelete}
         />
 

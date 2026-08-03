@@ -1,8 +1,9 @@
 export { default as AuthLayout } from './AuthLayout';
 export { default as FoodsLayout } from './FoodsLayout';
 export { default as FoodList } from './FoodList';
-export { default as GeneralLayout } from './GeneralLayout';
+export { default as DashboardLayout } from './DashboardLayout';
 export { default as CategoryLayout } from './CategoryLayout';
 export { default as SettingsLayout } from './SettingsLayout';
 export { default as QRLayout } from './QRLayout';
 export { default as SideBarLayout } from './SideBarLayout';
+export { default as FoodCardLayout } from './FoodCardLayout';

@@ -22,19 +22,20 @@ function CustomerMenuPage() {
     const [selectedCategory, setSelectedCategory] = useState("all");
 
     const filteredCategories = useMemo(() => {
-        if (!menu) return [];
+        const categories = menu?.categories ?? [];
 
-        return menu.categories
+        return categories
+            .filter(category => selectedCategory === "all" || category.name === selectedCategory)
             .map(category => ({
                 ...category,
-                foods: category.foods.filter(food =>
+                foods: (category.foods ?? []).filter(food =>
                     food.name
                         .toLowerCase()
                         .includes(search.toLowerCase())
                 ),
             }))
             .filter(category => category.foods.length > 0);
-    }, [menu, search]);
+    }, [menu, search, selectedCategory]);
     
 
     useEffect(() => {
@@ -43,7 +44,8 @@ function CustomerMenuPage() {
         const fetchMenu = async () => {
             try {
                 const data = await getMenu(slug);
-                setMenu(data);
+                setMenu(data as Menu);
+                console.log("Fetched menu:", data);
             } catch (error) {
                 console.error("Failed to fetch menu:", error);
             }
@@ -56,9 +58,20 @@ function CustomerMenuPage() {
         return <div>Loading...</div>
     }
 
+    const categories = menu.categories ?? [];
+
   return (
-    <div>
-        <h1>{menu.restaurant.name}</h1>
+    <div className="m-1 md:m-8 lg:m-10">
+        <h1>{menu.restaurant.name ?? "Menu"}</h1>
+        <p className="text-sm">{menu.restaurant.description && menu.restaurant.description}</p>
+
+        <div className="flex flex-row gap-5 items-center justify-center">
+            <p className="text-xs">{menu.restaurant.address && menu.restaurant.address}</p>
+            <p className="text-xs">{menu.restaurant.phone && menu.restaurant.phone}</p>
+            <p className="text-xs">{menu.restaurant.email && menu.restaurant.email}</p>
+            <p className="text-xs">{menu.restaurant.website && menu.restaurant.website}</p>
+            <p className="text-xs">{menu.restaurant.openingHours && menu.restaurant.openingHours}</p>
+        </div>
 
         {/* Search and Category Selector */}
         <div className="flex gap-4 items-center flex-row justify-between">
@@ -81,7 +94,7 @@ function CustomerMenuPage() {
                             All Categories
                         </SelectItem>
 
-                        {menu.categories.map(category => (
+                        {categories.map(category => (
                             <SelectItem
                                 key={category.name}
                                 value={category.name}
@@ -96,10 +109,10 @@ function CustomerMenuPage() {
 
         {/* Menu Items */}
         {filteredCategories.map(category => (
-            <div key={category.name}>
+            <div key={category.name} className="">
 
                 {category.foods.map(food => (
-                    <MenuCard name={food.name} description={food.description} price={food.price} 
+                    <MenuCard key={`${category.name}-${food.name}`} name={food.name} description={food.description} price={food.price} 
                     image={food.image} available={food.available} featured={food.featured}
                     />
                 ))}

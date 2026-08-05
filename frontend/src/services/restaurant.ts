@@ -1,5 +1,4 @@
 import api from "./axios";
-import type { RestaurantData } from "../types/restaurant";
 
 const restaurantService = {
     createRestaurant: async (restaurantData: FormData) => {

@@ -4,7 +4,7 @@ import { getBackendAssetUrl } from "@/lib/utils";
 
 type MenuCardProps = Omit<FoodData, "categoryId">;
 
-function MenuCard({name, description, price, image, available, featured}: MenuCardProps) {
+function MenuCard({name, description, price, image}: MenuCardProps) {
   return (
     <div className="mx-10 my-3">
         <div className="rounded-lg p-4">

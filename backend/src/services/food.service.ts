@@ -80,6 +80,19 @@ export const updateFoodById = async (ownerId: number, foodId: number, updateData
     })
     return food;
 }
+export const patchFoodById = async (ownerId: number, foodId: number, updateData: Partial<UpdateFoodData>) => {
+    const restaurant = await getRestaurantOrThrow(ownerId);
+    await getFoodOrThrow(foodId, restaurant.id);
+    const food = await prisma.food.update({
+        where: {
+            id: foodId,
+        },
+        data: {
+            ...updateData,
+        }
+    })
+    return food;
+}
 
 export const deleteFoodById = async (ownerId: number, foodId: number) => {
     const restaurant = await getRestaurantOrThrow(ownerId);

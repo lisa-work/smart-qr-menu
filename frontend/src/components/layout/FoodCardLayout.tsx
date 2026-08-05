@@ -45,13 +45,17 @@ function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
 
               <div className="flex gap-2 justify-end">
 
+              {/* Featured Button */}
                 <Button>
                     <CiStar />
                 </Button>
+
+              {/* Edit Button */}
                 <Button variant="outline" onClick={() => onEdit?.(food)}>
                   <MdOutlineEdit />
                 </Button>
 
+              {/* Delete Button */}
                 <Button variant="destructive" onClick={() => onDelete(id)}>
                   <MdDeleteOutline />
                 </Button>

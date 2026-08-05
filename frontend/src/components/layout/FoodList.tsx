@@ -1,4 +1,4 @@
-import { Button, Card } from "../ui";
+import { Card } from "../ui";
 import type { FoodData } from "@/types/food";
 import { FoodCardLayout } from "@/components";
 
@@ -10,12 +10,16 @@ export interface FoodListProps {
   foods: FoodWithId[];
   onEdit: (food: FoodWithId) => void;
   onDelete: (id: number) => void;
+  onAvailableToggle?: (id: number, available: boolean) => void;
+  onFeaturedToggle?: (id: number, featured: boolean) => void;
 }
 
 function FoodList({
   foods,
   onEdit,
   onDelete,
+  onAvailableToggle,
+  onFeaturedToggle
 }: FoodListProps) {
   if (foods.length === 0) {
     return (
@@ -40,6 +44,8 @@ function FoodList({
           foods={[food]}
           onEdit={onEdit}
           onDelete={onDelete}
+          onAvailableToggle={onAvailableToggle}
+          onFeaturedToggle={onFeaturedToggle}
         />
       ))}
     </div>

@@ -1,10 +1,11 @@
 import { Card, Button, Toggle } from "@/components/ui";
 import type { FoodListProps } from "./FoodList";
 import { MdOutlineEdit, MdDeleteOutline} from "react-icons/md";
-import { CiStar } from "react-icons/ci";
+import { FaRegStar } from "react-icons/fa";
 import { getBackendAssetUrl } from "@/lib/utils";
-import { FaT, FaToggleOff } from "react-icons/fa6";
-import { FaToggleOn } from "react-icons/fa";
+import { PiToggleLeftLight } from "react-icons/pi";
+import { PiToggleRightFill } from "react-icons/pi";
+import { FaStar } from "react-icons/fa";
 
 function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
   return (
@@ -50,16 +51,23 @@ function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
               {/* Available Toggle */}
               <div className="flex flex-row items-center gap-1">
                 <button>
-                  <FaToggleOff size={40} />
+                  { available ? (
+                    <PiToggleRightFill size={40} />
+                  ) : (
+                  <PiToggleLeftLight size={40} />)}
                 </button>
                 <span className="text-xs">Available</span>
               </div>
 
               <div className="flex flex-row items-center gap-1">
                 {/* Featured Button */}
-                  <Button>
-                      <CiStar />
-                  </Button>
+                  <button>
+                    { featured ? (
+                      <FaStar size={20} color="#FEC700"/>
+                    ) : (
+                      <FaRegStar size={20}/>
+                    )}
+                  </button>
 
                 {/* Edit Button */}
                   <Button variant="outline" onClick={() => onEdit?.(food)}>

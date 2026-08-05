@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card } from '../ui'
 import Logo from '../common/Logo'
 import type { LayoutProps } from '@/types/layout' 

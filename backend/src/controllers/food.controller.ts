@@ -2,7 +2,7 @@ import { asyncHandler } from "../middlewares/asyncHandler";
 import { Request, Response } from "express";
 import { getUserId } from "../utils";
 import { foodValidation, updateFoodValidation } from "../validators/food.validation";
-import { createFood, getFoods, getFoodById, getFoodByCategoryId, updateFoodById, deleteFoodById } from "../services/food.service";
+import { createFood, getFoods, getFoodById, getFoodByCategoryId, updateFoodById, deleteFoodById, patchFoodById } from "../services/food.service";
 
 const toOptionalString = (value: unknown) => {
     if (typeof value !== "string") return value;
@@ -100,6 +100,25 @@ export const updateFoodListById = asyncHandler(async (req: Request, res: Respons
     return res.status(200).json({
         message: "Food updated successfully",
         food: updatedFood
+    });
+});
+
+export const patchFoodListById = asyncHandler(async (req: Request, res: Response) => {
+    const parsed = updateFoodValidation.safeParse(normalizeFoodBody(req.body));
+    if (!parsed.success) {
+        return res.status(400).json({ errors: parsed.error.issues, message: "Invalid data" });
+    }
+
+    const validatedData = parsed.data;
+    const userId = getUserId(req);
+    const foodId = Number(req.params.foodId);
+    const patchFood = await patchFoodById(userId, foodId, validatedData);
+    if (!patchFood) {
+        return res.status(404).json({ message: "Food not found" });
+    }
+    return res.status(200).json({
+        message: "Food updated successfully",
+        food: patchFood
     });
 });
 

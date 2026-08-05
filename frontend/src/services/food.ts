@@ -1,4 +1,3 @@
-import type { FoodData } from "../types/food";
 import api from "./axios";
 
 const foodService = {

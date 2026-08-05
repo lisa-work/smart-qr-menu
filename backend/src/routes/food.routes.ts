@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createNewFood, getAllFoods, getFoodListById, getFoodListByCategoryId, updateFoodListById, deleteFoodListById } from "../controllers/food.controller";
+import { createNewFood, getAllFoods, getFoodListById, getFoodListByCategoryId, updateFoodListById, deleteFoodListById, patchFoodListById } from "../controllers/food.controller";
 import { protect } from "../middlewares/auth.middleware";
 import upload from "../middlewares/upload.middleware";
 
@@ -10,6 +10,7 @@ router.get("/", protect, getAllFoods);
 router.get("/:foodId", protect, getFoodListById);
 router.get("/category/:categoryId", protect, getFoodListByCategoryId);
 router.put("/:foodId", protect, upload.single("image"), updateFoodListById);
+router.patch("/:foodId", protect, patchFoodListById);
 router.delete("/:foodId", protect, deleteFoodListById);
 
 export default router;

@@ -1,4 +1,4 @@
-import { Card, Button, Toggle } from "@/components/ui";
+import { Card, Button } from "@/components/ui";
 import type { FoodListProps } from "./FoodList";
 import { MdOutlineEdit, MdDeleteOutline} from "react-icons/md";
 import { FaRegStar } from "react-icons/fa";
@@ -7,7 +7,7 @@ import { PiToggleLeftLight } from "react-icons/pi";
 import { PiToggleRightFill } from "react-icons/pi";
 import { FaStar } from "react-icons/fa";
 
-function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
+function FoodCardLayout({ foods, onEdit, onDelete, onAvailableToggle, onFeaturedToggle }: FoodListProps) {
   return (
     <div className="">
       {foods.map((food) => {
@@ -17,7 +17,6 @@ function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
           price,
           description,
           image,
-          categoryId,
           available,
           featured,
         } = food;
@@ -29,7 +28,7 @@ function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
               <img
                 src={getBackendAssetUrl(image)}
                 alt={name}
-                className="mt-4 h-[50%] md:h-[70%] md:w-full rounded-md object-cover"
+                className="mt-4 h-70 w-[100%] rounded-md object-cover"
               />
             )}
 
@@ -50,7 +49,7 @@ function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
 
               {/* Available Toggle */}
               <div className="flex flex-row items-center gap-1">
-                <button>
+                <button className="cursor-pointer" onClick={() => onAvailableToggle?.(id, !available)}>
                   { available ? (
                     <PiToggleRightFill size={40} />
                   ) : (
@@ -61,11 +60,11 @@ function FoodCardLayout({ foods, onEdit, onDelete }: FoodListProps) {
 
               <div className="flex flex-row items-center gap-1">
                 {/* Featured Button */}
-                  <button>
+                  <button className="cursor-pointer" onClick={() => onFeaturedToggle?.(id, !featured)}>
                     { featured ? (
                       <FaStar size={20} color="#FEC700"/>
                     ) : (
-                      <FaRegStar size={20}/>
+                      <FaRegStar size={20} color="#000000"/>
                     )}
                   </button>
 

@@ -1,5 +1,5 @@
 import { TbLayoutDashboardFilled } from "react-icons/tb";
-import { MdRestaurantMenu, MdCategory, MdDarkMode } from "react-icons/md";
+import { MdRestaurantMenu, MdCategory } from "react-icons/md";
 import { RiQrCodeFill } from "react-icons/ri";
 import { IoMdSettings} from "react-icons/io";
 import { IoLogOut } from "react-icons/io5";

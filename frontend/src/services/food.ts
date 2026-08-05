@@ -33,6 +33,11 @@ const foodService = {
         return response.data;
     },
 
+    patchFoodAvailable: async (foodId: number, available: boolean) => {
+        const response = await api.patch(`/foods/${foodId}`, { available });
+        return response.data;
+    },
+
     deleteFoodById: async (foodId: number) => {
         const response = await api.delete(`/foods/${foodId}`);
         return response.data;

@@ -122,6 +122,28 @@ function FoodPage() {
     }
   };
 
+  const handleAvailableToggle = async (id: number, available: boolean) => {
+    try {
+      await foodService.patchFoodAvailable(id, available);
+      toast.success("Food availability updated successfully.");
+      await fetchFoods();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update food availability.");
+    }
+  };
+
+  const handleFeaturedToggle = async (id: number, featured: boolean) => {
+    try {
+      await foodService.patchFoodFeatured(id, featured);
+      toast.success("Food featured status updated successfully.");
+      await fetchFoods();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update food featured status.");
+    }
+  };
+
   const handleDelete = async (id: number) => {
     try {
       await foodService.deleteFoodById(id);
@@ -248,6 +270,8 @@ function FoodPage() {
             setModalOpen(true);
           }}
           onDelete={handleDelete}
+          onAvailableToggle={handleAvailableToggle}
+          onFeaturedToggle={handleFeaturedToggle}
         />
 
         {/* Cancel Editing */}

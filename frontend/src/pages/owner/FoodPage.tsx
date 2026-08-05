@@ -24,9 +24,6 @@ import { TiPlus } from "react-icons/ti";
 import { RiSubtractFill } from "react-icons/ri";
 import type { CategoryWithFoods } from "@/types/menu";
 
-/* -------------------------------------------------------------------------- */
-/*                                   Types                                    */
-/* -------------------------------------------------------------------------- */
 
 type FoodWithId = FoodData & {
   id: number;
@@ -39,15 +36,7 @@ interface CategoryWithFoodAndId extends CategoryWithFoods {
   id: number;
 };
 
-/* -------------------------------------------------------------------------- */
-/*                                 Food Page                                  */
-/* -------------------------------------------------------------------------- */
-
 function FoodPage() {
-  /* ------------------------------------------------------------------------ */
-  /*                                   State                                  */
-  /* ------------------------------------------------------------------------ */
-
   const [foods, setFoods] = useState<FoodWithId[]>([]);
   const [categories, setCategories] = useState<CategoryWithFoodAndId[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -62,10 +51,6 @@ function FoodPage() {
   const [submitLoading, setSubmitLoading] =
     useState(false);
 
-  /* ------------------------------------------------------------------------ */
-  /*                              Fetch Categories                            */
-  /* ------------------------------------------------------------------------ */
-
   const fetchCategories = async () => {
     try {
       const response = await categoryService.getCategories();
@@ -77,10 +62,6 @@ function FoodPage() {
       toast.error("Failed to load categories.");
     }
   };
-
-  /* ------------------------------------------------------------------------ */
-  /*                                Fetch Foods                               */
-  /* ------------------------------------------------------------------------ */
 
   const fetchFoods = async () => {
     try {
@@ -112,10 +93,6 @@ function FoodPage() {
     });
   }, [foods, search, selectedCategory]);
 
-  /* ------------------------------------------------------------------------ */
-  /*                              Create / Update                             */
-  /* ------------------------------------------------------------------------ */
-
   const handleSubmit = async (data: FormData) => {
     setSubmitLoading(true);
 
@@ -145,10 +122,6 @@ function FoodPage() {
     }
   };
 
-  /* ------------------------------------------------------------------------ */
-  /*                                Delete Food                               */
-  /* ------------------------------------------------------------------------ */
-
   const handleDelete = async (id: number) => {
     try {
       await foodService.deleteFoodById(id);
@@ -167,17 +140,9 @@ function FoodPage() {
     }
   };
 
-  /* ------------------------------------------------------------------------ */
-  /*                               Cancel Editing                             */
-  /* ------------------------------------------------------------------------ */
-
   const handleCancelEdit = () => {
     setSelectedFood(null);
   };
-
-  /* ------------------------------------------------------------------------ */
-  /*                               Initial Load                               */
-  /* ------------------------------------------------------------------------ */
 
   useEffect(() => {
     const loadPage = async () => {
@@ -194,10 +159,6 @@ function FoodPage() {
     loadPage();
   }, []);
 
-    /* ------------------------------------------------------------------------ */
-  /*                              Loading State                               */
-  /* ------------------------------------------------------------------------ */
-
   if (pageLoading) {
     return (
       <FoodsLayout
@@ -212,10 +173,6 @@ function FoodPage() {
       </FoodsLayout>
     );
   }
-
-  /* ------------------------------------------------------------------------ */
-  /*                                   JSX                                    */
-  /* ------------------------------------------------------------------------ */
 
   return (
     <FoodsLayout

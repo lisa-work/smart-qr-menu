@@ -27,6 +27,12 @@ const foodService = {
         return response.data;
     },
 
+    // PATCH function for partial updates (sends JSON)
+    patchFoodFeatured: async (foodId: number, featured: boolean) => {
+        const response = await api.patch(`/foods/${foodId}`, { featured });
+        return response.data;
+    },
+
     deleteFoodById: async (foodId: number) => {
         const response = await api.delete(`/foods/${foodId}`);
         return response.data;
